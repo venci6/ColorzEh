@@ -85,11 +85,18 @@ public class Pattern {
      */
 
     private void updateOrderPattern (String c) {
-
+        String expected = this.orderPattern.substring(this.orderPosition, this.orderPosition + 1);
+        if (c.equals(expected)) {   // right input was entered
+            this.orderPosition++;
+        } else {                    // wrong input was entered reset
+            this.orderPosition = 0;
+        }
     }
+
     private void updatePositionPattern (int x, int y) {
 
     }
+
     private void updateQuantityPattern (String c) {
         if (c.equals("R")) {
             this.quantityPosition[0]++;
