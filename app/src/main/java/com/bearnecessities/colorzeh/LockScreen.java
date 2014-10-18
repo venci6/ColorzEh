@@ -28,7 +28,7 @@ public class LockScreen extends Activity implements View.OnClickListener{
 
 
     boolean unlock = false;
-    String[] password = {"1", "RGB" , "", ""};
+    String[] password = {"1", "RGBYR" , "000102", "4110"};
     Pattern pat = new Pattern(password, 123L);
     private static final String TAG = LockScreen.class.getSimpleName();
     ImageButton tl, tm, tr, ml, mm, mr, bl, bm, br;
@@ -40,16 +40,9 @@ public class LockScreen extends Activity implements View.OnClickListener{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lock_screen);
-        /*Thread checkOpen = new Thread()
-        {
-            public void run(){
-                while(true) {
-                    if (unlock){
-                        finish();}
-                }
-            }
-        };
-        checkOpen.start();*/
+
+
+
         initializeButtons();
 
     }
@@ -81,73 +74,79 @@ public class LockScreen extends Activity implements View.OnClickListener{
 
     @Override
     public void onClick(View v) {
-        int locationX;
-        int locationY;
+        int locationX = 0;
+        int locationY = 0;
         boolean unlock = false;
 
         switch(v.getId()) {
             case R.id.top_left:
                 locationX = 0;
                 locationY = 0;
-                //pat.input(locationX, locationY);
+
                 Log.v(TAG, "top left was clicked. Hoorah. Hodor.");
 
                 break;
             case R.id.top_mid:
                 locationX = 1;
                 locationY = 0;
-                //pat.input(locationX, locationY);
+
                 Log.v(TAG, "top mid was clicked. Hoorah. Hodor.");
                 break;
             case R.id.top_right:
                 locationX = 2;
                 locationY = 0;
-                //pat.input(locationX, locationY);
+
                 Log.v(TAG, "top right was clicked. Hoorah. Hodor.");
                 break;
             case R.id.mid_left:
                 locationX = 0;
                 locationY = 1;
-                //pat.input(locationX, locationY);
+
                 Log.v(TAG, "mid left was clicked. Hoorah. Hodor.");
                 break;
 
             case R.id.mid_mid:
                 locationX = 1;
                 locationY = 1;
-                //pat.input(locationX, locationY);
+
                 Log.v(TAG, "mid mid was clicked. Hoorah. Hodor.");
                 break;
             case R.id.mid_right:
                 locationX = 2;
                 locationY = 1;
-                //pat.input(locationX, locationY);
+
                 Log.v(TAG, "mid right was clicked. Hoorah. Hodor.");
                 break;
 
             case R.id.bot_left:
                 locationX = 0;
                 locationY = 2;
-                //pat.input(locationX, locationY);
+
                 Log.v(TAG, "bot left was clicked. Hoorah. Hodor.");
                 break;
             case R.id.bot_mid:
                 locationX = 1;
                 locationY = 1;
-                //pat.input(locationX, locationY);
+
                 Log.v(TAG, "bot mid was clicked. Hoorah. Hodor.");
                 break;
 
             case R.id.bot_right:
                 locationX = 2;
                 locationY = 2;
-                //pat.input(locationX, locationY);
+
                 Log.v(TAG, "bot right was clicked. Hoorah. Hodor.");
                 break;
         }
 
         this.updateColorGrid(pat.updatePattern());
 
+
+            Log.v(TAG, pat.getColorAtPosition(locationX,locationY));
+            unlock = pat.input(locationX, locationY);
+            Log.v(TAG, unlock + "");
+            if (unlock)
+                this.finish();
     }
 
 

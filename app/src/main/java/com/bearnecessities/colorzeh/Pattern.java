@@ -4,6 +4,10 @@ import java.util.Random;
 
 /**
  * Created by tjf3191 on 10/17/14.
+ *
+ * Bug notes:
+ * positon unlock is not working, but did not go out of bounds
+ * quantity unlock is going out of bounds.
  */
 public class Pattern {
 

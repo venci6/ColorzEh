@@ -21,5 +21,6 @@
     <color name="Blue">#0000FF</color>
     <color name="Green">#00FF00</color>
     <color name="Yellow">#FFFF00</color>
+    <color name="White">#FFFFFF</color>
     <color name="Background">#000000</color>
 </resources>
