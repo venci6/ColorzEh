@@ -18,7 +18,7 @@ public class Pattern {
 
     private int orderPosition;              // the position in the order pattern
     private int positionPosition;           // the position in the position pattern
-    private int[] quantityPosition;         // the position of the quantaties
+    private int[] quantityPosition;         // the position of the quantities
 
     private Random rand;                    // for randomly changing the grid
 

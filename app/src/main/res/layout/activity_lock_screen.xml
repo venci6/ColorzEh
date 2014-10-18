@@ -3,6 +3,8 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:orientation="vertical"
+    android:gravity="center"
+    android:background="@color/Background"
     tools:context=".LockScreen">
 
 
@@ -14,25 +16,25 @@
         android:orientation="horizontal">
 
         <ImageButton
-            android:contentDescription=""
+            android:contentDescription="@string/TLBtn"
             android:id="@+id/top_left"
-            style="?android:textAppearanceSmall"
             android:layout_width="100dp"
-            android:layout_height="wrap_content"
-            android:textStyle="bold"/>
+            android:layout_height="100dp"
+            android:gravity="center"
+            android:background="@color/Red"/>
         <ImageButton
+            android:contentDescription="@string/TMBtn"
             android:id="@+id/top_mid"
-            style="?android:textAppearanceSmall"
             android:layout_width="100dp"
-            android:layout_height="wrap_content"
-            android:textStyle="bold"/>
+            android:layout_height="100dp"
+            android:background="@color/Blue"/>
 
         <ImageButton
+            android:contentDescription="@string/TRBtn"
             android:id="@+id/top_right"
-            style="?android:textAppearanceSmall"
             android:layout_width="100dp"
-            android:layout_height="wrap_content"
-            android:textStyle="bold"/>
+            android:layout_height="100dp"
+            android:background="@color/Yellow"/>
     </LinearLayout>
 
     <LinearLayout
@@ -42,24 +44,24 @@
         android:orientation="horizontal">
 
         <ImageButton
+            android:contentDescription="@string/MLBtn"
             android:id="@+id/mid_left"
-            style="?android:textAppearanceSmall"
             android:layout_width="100dp"
-            android:layout_height="wrap_content"
-            android:textStyle="bold"/>
+            android:layout_height="100dp"
+            android:background="@color/Yellow"/>
         <ImageButton
+            android:contentDescription="@string/MMBtn"
             android:id="@+id/mid_mid"
-            style="?android:textAppearanceSmall"
             android:layout_width="100dp"
-            android:layout_height="wrap_content"
-            android:textStyle="bold"/>
+            android:layout_height="100dp"
+            android:background="@color/Green"/>
 
         <ImageButton
+            android:contentDescription="@string/MRBtn"
             android:id="@+id/mid_right"
-            style="?android:textAppearanceSmall"
             android:layout_width="100dp"
-            android:layout_height="wrap_content"
-            android:textStyle="bold"/>
+            android:layout_height="100dp"
+            android:background="@color/Red"/>
     </LinearLayout>
 
     <LinearLayout
@@ -69,23 +71,23 @@
         android:orientation="horizontal">
 
         <ImageButton
+            android:contentDescription="@string/BLBtn"
             android:id="@+id/bot_left"
-            style="?android:textAppearanceSmall"
             android:layout_width="100dp"
-            android:layout_height="wrap_content"
-            android:textStyle="bold"/>
+            android:layout_height="100dp"
+            android:background="@color/Green"/>
         <ImageButton
+            android:contentDescription="@string/BMBtn"
             android:id="@+id/bot_mid"
-            style="?android:textAppearanceSmall"
             android:layout_width="100dp"
-            android:layout_height="wrap_content"
-            android:textStyle="bold"/>
+            android:layout_height="100dp"
+            android:background="@color/Blue"/>
 
         <ImageButton
+            android:contentDescription="@string/BRBtn"
             android:id="@+id/bot_right"
-            style="?android:textAppearanceSmall"
             android:layout_width="100dp"
-            android:layout_height="wrap_content"
-            android:textStyle="bold"/>
+            android:layout_height="100dp"
+            android:background="@color/Yellow"/>
     </LinearLayout>
-    </LinearLayout>
+</LinearLayout>

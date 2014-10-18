@@ -2,7 +2,24 @@
 <resources>
 
     <string name="app_name">ColorzEh</string>
-    <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
 
+
+    <string name="TLBtn">Top Left Button</string>
+    <string name="TMBtn">Top Mid Button</string>
+    <string name="TRBtn">Top Right Button</string>
+
+    <string name="MLBtn">Mid Left Button</string>
+    <string name="MMBtn">Mid Mid Button</string>
+    <string name="MRBtn">Mid Right Button</string>
+
+    <string name="BLBtn">Bot Left Button</string>
+    <string name="BMBtn">Bot Middle Button</string>
+    <string name="BRBtn">Bot Right Button</string>
+
+    <color name="Red">#FF0000</color>
+    <color name="Blue">#0000FF</color>
+    <color name="Green">#00FF00</color>
+    <color name="Yellow">#FFFF00</color>
+    <color name="Background">#000000</color>
 </resources>
