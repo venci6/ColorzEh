@@ -1,6 +1,7 @@
 package com.bearnecessities.colorzeh;
 
 import java.util.Random;
+import android.util.Log;
 
 /**
  * Created by tjf3191 on 10/17/14.
@@ -10,6 +11,7 @@ import java.util.Random;
  * quantity unlock is going out of bounds.
  */
 public class Pattern {
+    private static final String TAG = Pattern.class.getSimpleName();
 
     // Colors
     public static final String[] COLORS = {"RED", "BLUE", "YELLOW", "GREEN"};
@@ -214,10 +216,11 @@ public class Pattern {
         String layoutBuilder = "";
 
         for (int c = 0; c < 9; c++) {
-            layoutBuilder += Pattern.COLORS[this.rand.nextInt(3)].substring(0,1);
+            layoutBuilder += Pattern.COLORS[this.rand.nextInt(4)].substring(0,1);
         }
 
-        //return layoutBuilder;
-        return "RBYYGRGBY";
+        Log.v(TAG, layoutBuilder);
+        return layoutBuilder;
+//        return "RBYYGRGBY";
     }
 }

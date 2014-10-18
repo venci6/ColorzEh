@@ -26,25 +26,19 @@ import java.util.concurrent.locks.Lock;
 
 public class LockScreen extends Activity implements View.OnClickListener{
 
-
     boolean unlock = false;
     String[] password = {"1", "RGBYR" , "000102", "4110"};
     Pattern pat = new Pattern(password, 123L);
     private static final String TAG = LockScreen.class.getSimpleName();
     ImageButton tl, tm, tr, ml, mm, mr, bl, bm, br;
 
-
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lock_screen);
 
-
-
         initializeButtons();
-
+        updateColorGrid();
     }
 
     private void initializeButtons()
@@ -68,8 +62,6 @@ public class LockScreen extends Activity implements View.OnClickListener{
         bl.setOnClickListener(this);
         bm.setOnClickListener(this);
         br.setOnClickListener(this);
-
-
     }
 
     @Override
@@ -84,7 +76,6 @@ public class LockScreen extends Activity implements View.OnClickListener{
                 locationY = 0;
 
                 Log.v(TAG, "top left was clicked. Hoorah. Hodor.");
-
                 break;
             case R.id.top_mid:
                 locationX = 1;
@@ -126,7 +117,7 @@ public class LockScreen extends Activity implements View.OnClickListener{
                 break;
             case R.id.bot_mid:
                 locationX = 1;
-                locationY = 1;
+                locationY = 2;
 
                 Log.v(TAG, "bot mid was clicked. Hoorah. Hodor.");
                 break;
@@ -139,14 +130,17 @@ public class LockScreen extends Activity implements View.OnClickListener{
                 break;
         }
 
-      //  this.updateColorGrid(pat.updatePattern());
 
 
-            Log.v(TAG, pat.getColorAtPosition(locationX,locationY));
+            Log.v(TAG, "X: "+ locationX + " Y: " + locationY + " = "+ pat.getColorAtPosition(locationX,locationY));
             unlock = pat.input(locationX, locationY);
             Log.v(TAG, unlock + "");
-            if (unlock)
+            if (unlock) {
                 this.finish();
+            } else {
+                pat.updatePattern();
+                updateColorGrid();
+            }
     }
 
 
@@ -168,67 +162,34 @@ public class LockScreen extends Activity implements View.OnClickListener{
         }
         return super.onOptionsItemSelected(item);
     }
-/*
-    public void updateColorGrid(String color_string) {
-        int i = 0;
 
-        while(i < color_string.length()) {
-            char color = color_string.charAt(i);
-            int newColor;
+    private void setBtnColor(ImageButton btn, String color ) {
 
-            switch(color) {
-                case 'R':
-                    newColor = R.color.Red;
-                    break;
-                case 'G':
-                    newColor = R.color.Green;
-                    break;
-                case 'Y':
-                    newColor = R.color.Yellow;
-                    break;
-                case 'B':
-                    newColor = R.color.Blue;
-                    break;
-                default:
-                    newColor = R.color.White;
-                    break;
-            }
-            switch(i) {
-                case 0:
-                    tl.setBackgroundColor(newColor);
-                    break;
-                case 1:
-                    tm.setBackgroundColor(newColor);
-                    break;
-                case 2:
-                    tr.setBackgroundColor(newColor);
-                    break;
-                case 3:
-                    ml.setBackgroundColor(newColor);
-                    break;
-                case 4:
-                    mm.setBackgroundColor(newColor);
-                    break;
-                case 5:
-                    mr.setBackgroundColor(newColor);
-                    break;
-                case 6:
-                    bl.setBackgroundColor(newColor);
-                    break;
-                case 7:
-                    bm.setBackgroundColor(newColor);
-                    break;
-                case 8:
-                    br.setBackgroundColor(newColor);
-                    break;
-                default:
-                    mm.setBackgroundColor(newColor);
-                    break;
-            }
-            i++;
+        if(color.equals("RED")) {
+            btn.setBackgroundColor(getResources().getColor(R.color.Red));
+        } else if(color.equals("BLUE")) {
+            btn.setBackgroundColor(getResources().getColor(R.color.Blue));
+        } else if(color.equals("GREEN")) {
+            btn.setBackgroundColor(getResources().getColor(R.color.Green));
+        } else if(color.equals("YELLOW")) {
+            btn.setBackgroundColor(getResources().getColor(R.color.Yellow));
+        } else {
+            btn.setBackgroundColor(getResources().getColor(R.color.White));
         }
+    }
+    public void updateColorGrid() {
+        setBtnColor(tl, pat.getColorAtPosition(0,0));
+        setBtnColor(tm, pat.getColorAtPosition(1,0));
+        setBtnColor(tr, pat.getColorAtPosition(2,0));
 
-    }*/
+        setBtnColor(ml, pat.getColorAtPosition(0,1));
+        setBtnColor(mm, pat.getColorAtPosition(1,1));
+        setBtnColor(mr, pat.getColorAtPosition(2,1));
+
+        setBtnColor(bl, pat.getColorAtPosition(0,2));
+        setBtnColor(bm, pat.getColorAtPosition(1,2));
+        setBtnColor(br, pat.getColorAtPosition(2,2));
+    }
 
 
 }
