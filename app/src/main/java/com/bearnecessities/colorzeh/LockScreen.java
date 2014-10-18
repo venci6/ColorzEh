@@ -1,10 +1,20 @@
 package com.bearnecessities.colorzeh;
 
+        /*
+              0 1 2
+              _ _ _
+         0   |_|_|_|
+         1   |_|_|_|
+         2   |_|_|_|
+
+        */
+
 import android.app.Activity;
 import android.graphics.Color;
 import android.graphics.drawable.PaintDrawable;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -13,6 +23,9 @@ import android.widget.ImageButton;
 
 public class LockScreen extends Activity implements View.OnClickListener{
 
+    String[] password = {"RGB" , "", ""};
+    Pattern p = new Pattern(password, 123L);
+    private static final String TAG = LockScreen.class.getSimpleName();
     ImageButton tl, tm, tr, ml, mm, mr, bl, bm, br;
 
     @Override
@@ -44,14 +57,7 @@ public class LockScreen extends Activity implements View.OnClickListener{
         bm.setOnClickListener(this);
         br.setOnClickListener(this);
 
-        /*
-              0 1 2
-              _ _ _
-         0   |_|_|_|
-         1   |_|_|_|
-         2   |_|_|_|
 
-        */
     }
 
     @Override
@@ -63,41 +69,50 @@ public class LockScreen extends Activity implements View.OnClickListener{
             case R.id.top_left:
                 locationX = 0;
                 locationY = 0;
+                Log.v(TAG, "top left was clicked. Hoorah. Hodor.");
                 break;
             case R.id.top_mid:
                 locationX = 1;
                 locationY = 0;
+                Log.v(TAG, "top mid was clicked. Hoorah. Hodor.");
                 break;
             case R.id.top_right:
                 locationX = 2;
                 locationY = 0;
+                Log.v(TAG, "top right was clicked. Hoorah. Hodor.");
                 break;
             case R.id.mid_left:
                 locationX = 0;
                 locationY = 1;
+                Log.v(TAG, "mid left was clicked. Hoorah. Hodor.");
                 break;
 
             case R.id.mid_mid:
                 locationX = 1;
                 locationY = 1;
+                Log.v(TAG, "mid mid was clicked. Hoorah. Hodor.");
                 break;
             case R.id.mid_right:
                 locationX = 2;
                 locationY = 1;
+                Log.v(TAG, "mid right was clicked. Hoorah. Hodor.");
                 break;
 
             case R.id.bot_left:
                 locationX = 0;
                 locationY = 2;
+                Log.v(TAG, "bot left was clicked. Hoorah. Hodor.");
                 break;
             case R.id.bot_mid:
                 locationX = 1;
                 locationY = 1;
+                Log.v(TAG, "bot mid was clicked. Hoorah. Hodor.");
                 break;
 
             case R.id.bot_right:
                 locationX = 2;
                 locationY = 2;
+                Log.v(TAG, "bot right was clicked. Hoorah. Hodor.");
                 break;
         }}
 
