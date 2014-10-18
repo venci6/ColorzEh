@@ -2,18 +2,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    android:paddingBottom="@dimen/activity_vertical_margin"
     android:orientation="vertical"
     tools:context=".LockScreen">
 
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:padding="0dp"
+        android:layout_gravity="center_horizontal"
         android:orientation="horizontal">
 
         <ImageButton
@@ -22,14 +19,12 @@
             style="?android:textAppearanceSmall"
             android:layout_width="100dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
             android:textStyle="bold"/>
         <ImageButton
             android:id="@+id/top_mid"
             style="?android:textAppearanceSmall"
             android:layout_width="100dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
             android:textStyle="bold"/>
 
         <ImageButton
@@ -37,13 +32,13 @@
             style="?android:textAppearanceSmall"
             android:layout_width="100dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
             android:textStyle="bold"/>
     </LinearLayout>
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
         android:orientation="horizontal">
 
         <ImageButton
@@ -51,14 +46,12 @@
             style="?android:textAppearanceSmall"
             android:layout_width="100dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
             android:textStyle="bold"/>
         <ImageButton
             android:id="@+id/mid_mid"
             style="?android:textAppearanceSmall"
             android:layout_width="100dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
             android:textStyle="bold"/>
 
         <ImageButton
@@ -66,13 +59,13 @@
             style="?android:textAppearanceSmall"
             android:layout_width="100dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
             android:textStyle="bold"/>
     </LinearLayout>
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
         android:orientation="horizontal">
 
         <ImageButton
@@ -80,14 +73,12 @@
             style="?android:textAppearanceSmall"
             android:layout_width="100dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
             android:textStyle="bold"/>
         <ImageButton
             android:id="@+id/bot_mid"
             style="?android:textAppearanceSmall"
             android:layout_width="100dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
             android:textStyle="bold"/>
 
         <ImageButton
@@ -95,7 +86,6 @@
             style="?android:textAppearanceSmall"
             android:layout_width="100dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
             android:textStyle="bold"/>
     </LinearLayout>
     </LinearLayout>
