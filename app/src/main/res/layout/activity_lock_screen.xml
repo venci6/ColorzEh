@@ -21,13 +21,13 @@
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:gravity="center"
-            android:background="@color/Red"/>
+            android:background="@color/Yellow"/>
         <ImageButton
             android:contentDescription="@string/TMBtn"
             android:id="@+id/top_mid"
             android:layout_width="100dp"
             android:layout_height="100dp"
-            android:background="@color/Blue"/>
+            android:background="@color/Yellow"/>
 
         <ImageButton
             android:contentDescription="@string/TRBtn"
@@ -48,7 +48,7 @@
             android:id="@+id/mid_left"
             android:layout_width="100dp"
             android:layout_height="100dp"
-            android:background="@color/Yellow"/>
+            android:background="@color/Red"/>
         <ImageButton
             android:contentDescription="@string/MMBtn"
             android:id="@+id/mid_mid"
@@ -75,7 +75,7 @@
             android:id="@+id/bot_left"
             android:layout_width="100dp"
             android:layout_height="100dp"
-            android:background="@color/Green"/>
+            android:background="@color/Blue"/>
         <ImageButton
             android:contentDescription="@string/BMBtn"
             android:id="@+id/bot_mid"
@@ -88,6 +88,6 @@
             android:id="@+id/bot_right"
             android:layout_width="100dp"
             android:layout_height="100dp"
-            android:background="@color/Yellow"/>
+            android:background="@color/Blue"/>
     </LinearLayout>
 </LinearLayout>
