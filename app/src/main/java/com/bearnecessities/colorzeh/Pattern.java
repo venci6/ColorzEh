@@ -72,7 +72,8 @@ public class Pattern {
     }
 
     public boolean input (int x, int y) {
-        return false;
+        updateOrderPattern(getColorAtPosition(x,y).substring(0,1));
+        return this.orderPosition >= this.orderPattern.length();
     }
 
 
@@ -94,6 +95,12 @@ public class Pattern {
     }
 
     private void updatePositionPattern (int x, int y) {
+        String expected = this.positionPattern.substring(this.positionPosition, this.positionPosition + 2);
+        if (c.equals(expected)) {
+            this.positionPosition += 2;
+        } else {
+            this.positionPosition = 0;
+        }
 
     }
 
