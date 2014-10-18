@@ -46,7 +46,8 @@ public class Pattern {
         this.quantityPosition[2] = 0;
         this.quantityPosition[3] = 0;
 
-        this.rand = new Random(seed);
+        this.rand = new Random();
+        this.rand.setSeed(seed);
 
         this.layout = generateLayout();
     }
@@ -209,7 +210,7 @@ public class Pattern {
         String layoutBuilder = "";
 
         for (int c = 0; c < 9; c++) {
-            //layoutBuilder += Pattern.COLORS[this.rand.nextInt() % 4].substring(0,1);
+            layoutBuilder += Pattern.COLORS[this.rand.nextInt(3)].substring(0,1);
         }
 
         //return layoutBuilder;
