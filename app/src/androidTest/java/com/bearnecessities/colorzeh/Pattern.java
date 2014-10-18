@@ -81,7 +81,7 @@ public class Pattern {
 
     /*
         =========================================================
-        Tommy's methods dont look!!! O_o
+        Tommy's methods don't look!!! O_o
      */
 
     private void updateOrderPattern (String c) {
