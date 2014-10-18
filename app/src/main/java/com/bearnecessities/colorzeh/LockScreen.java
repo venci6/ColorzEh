@@ -139,7 +139,7 @@ public class LockScreen extends Activity implements View.OnClickListener{
                 break;
         }
 
-        this.updateColorGrid(pat.updatePattern());
+      //  this.updateColorGrid(pat.updatePattern());
 
 
             Log.v(TAG, pat.getColorAtPosition(locationX,locationY));
@@ -168,7 +168,7 @@ public class LockScreen extends Activity implements View.OnClickListener{
         }
         return super.onOptionsItemSelected(item);
     }
-
+/*
     public void updateColorGrid(String color_string) {
         int i = 0;
 
@@ -228,7 +228,7 @@ public class LockScreen extends Activity implements View.OnClickListener{
             i++;
         }
 
-    }
+    }*/
 
 
 }
