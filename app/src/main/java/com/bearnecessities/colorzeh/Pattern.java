@@ -74,9 +74,20 @@ public class Pattern {
         }
     }
 
+    /**
+     * Updates the nessisary pattern tracking based on the input give.
+     * @param x the x positon pressed [0-2]
+     * @param y the y position pressed [0-2]
+     * @return true if the pattern has been sucessfully executed.
+     */
     public boolean input (int x, int y) {
 
         boolean unlocked = false;
+
+        // Todo:
+        // add implementation that a which pattern of length greater
+        // than 1, will execute patterns in the order given. Aka "312"
+        // will execute a quantity, then a order, then position.
 
         if (this.whichPattern.equals("1")) {
             updateOrderPattern(getColorAtPosition(x,y).substring(0,1));
@@ -92,15 +103,17 @@ public class Pattern {
         return unlocked;
     }
 
-
-
-
-
     /*
         =========================================================
-        Tommy's methods don't look!!! O_o
+        These are some utility methods that are commonly used
+        in the public methods above.
+        =========================================================
      */
 
+    /**
+     * Checks if each quantity is at the correct value.
+     * @return true if evey quantity is at the correct value, and false otherwise
+     */
     private boolean checkQuantities() {
         return ((this.quantityPattern.substring(0,1).equals(this.quantityPosition[0] + "")) &&
                 (this.quantityPattern.substring(1,2).equals(this.quantityPosition[1] + ""))) &&
@@ -108,6 +121,12 @@ public class Pattern {
                  (this.quantityPattern.substring(3,4).equals(this.quantityPosition[3] + "")));
     }
 
+    /**
+     * This checks if the inputed value is correct according to the orderPattern.
+     * If the correct value is inputed then the position is advanced, otherwise it is
+     * reset.
+     * @param c the color inputed [R|B|Y|G]
+     */
     private void updateOrderPattern (String c) {
         String expected = this.orderPattern.substring(this.orderPosition, this.orderPosition + 1);
         if (c.equals(expected)) {   // right input was entered
@@ -117,6 +136,12 @@ public class Pattern {
         }
     }
 
+    /**
+     * This checks if the inputed value is correct based on its position. if the correct
+     * value is inputed then the position is advanced, otherwise it is reset.
+     * @param x
+     * @param y
+     */
     private void updatePositionPattern (int x, int y) {
         String expected = this.positionPattern.substring(this.positionPosition, this.positionPosition + 2);
         String result = "" + x + "" + y;
@@ -128,6 +153,10 @@ public class Pattern {
 
     }
 
+    /**
+     * This updates the quantity based on the input
+     * @param c the color inputed [R|B|Y|G]
+     */
     private void updateQuantityPattern (String c) {
         if (c.equals("R")) {
             this.quantityPosition[0]++;
@@ -140,6 +169,11 @@ public class Pattern {
         }
     }
 
+    /**
+     * Gets the Pattern.COLORS based on the input
+     * @param c the color inputed [R|B|Y|G]
+     * @return the Pattern.COLOR
+     */
     private String getColor (String c) {
         if (c.equals("R")) {
             return Pattern.COLORS[0];
@@ -152,7 +186,15 @@ public class Pattern {
         }
     }
 
+    /**
+     * This will randomly generate a colored layout
+     * @return the layout generated
+     */
     private String generateLayout() {
+
+        //Todo:
+        // Make sure that one of every color is generated.
+        // Make the randomness better
 
         String layoutBuilder = "";
 
