@@ -167,6 +167,16 @@ public class Pattern {
         } else {
             this.quantityPosition[3]++;
         }
+
+        if (Integer.parseInt(this.quantityPattern.substring(0,1)) < this.quantityPosition[0]) {
+
+        } else if (Integer.parseInt(this.quantityPattern.substring(1, 2)) < this.quantityPosition[1]) {
+
+        } else if (Integer.parseInt(this.quantityPattern.substring(2, 3)) < this.quantityPosition[2]) {
+
+        } else if (Integer.parseInt(this.quantityPattern.substring(4, 5)) < this.quantityPosition[3]) {
+
+        }
     }
 
     /**
