@@ -16,6 +16,7 @@ public class Pattern {
 
     private String layout;                  // the order of color blocks from left to right and top to bottom
 
+    private final String whichPattern;      // the pattern to operate
     private int orderPosition;              // the position in the order pattern
     private int positionPosition;           // the position in the position pattern
     private int[] quantityPosition;         // the position of the quantities
@@ -25,15 +26,17 @@ public class Pattern {
     /**
      * This is the only constructor for the class Pattern
      * @param patterns the array of patterns to run from first to last for now
-     *                 Array -> ("an order pattern [RGYRGG]",
+     *                 Array -> ("the pattern to run [#] (1 is the order, 2 is the position, ...)"
+     *                 "an order pattern [RGYRGG]",
      *                 "a positon pattern [01221100]",
      *                 "a quantity pattern [4235]")
      * @param seed the seed for the random generator
      */
     public Pattern (String[] patterns, long seed) {
-        this.orderPattern = patterns[0];
-        this.positionPattern = patterns[1];
-        this.quantityPattern = patterns[2];
+        this.whichPattern = patterns[0];
+        this.orderPattern = patterns[1];
+        this.positionPattern = patterns[2];
+        this.quantityPattern = patterns[3];
 
         this.orderPosition = 0;
         this.positionPosition = 0;
@@ -72,8 +75,21 @@ public class Pattern {
     }
 
     public boolean input (int x, int y) {
-        updateOrderPattern(getColorAtPosition(x,y).substring(0,1));
-        return this.orderPosition >= this.orderPattern.length();
+
+        boolean unlocked = false;
+
+        if (this.whichPattern.equals("1")) {
+            updateOrderPattern(getColorAtPosition(x,y).substring(0,1));
+            unlocked = this.orderPosition >= this.orderPattern.length();
+        } else if (this.whichPattern.equals("2")) {
+            updatePositionPattern(x,y);
+            unlocked = this.positionPosition >= this.positionPattern.length();
+        } else {
+            updateQuantityPattern(getColorAtPosition(x,y).substring(0,1));
+            unlocked = false; //checkQuantities();
+        }
+        
+        return unlocked;
     }
 
 
@@ -129,9 +145,14 @@ public class Pattern {
     }
 
     private String generateLayout() {
-        return "RBYYGRGBY"; // static layout for now
 
-        //ToDo
-        // add a randome update;
+        String layoutBuilder = "";
+
+        for (int c = 0; c < 9; c++) {
+            layoutBuilder += Pattern.COLORS[this.rand.nextInt() % 4];
+        }
+
+        //return layoutBuilder;
+        return "RBYYGRGBY";
     }
 }
