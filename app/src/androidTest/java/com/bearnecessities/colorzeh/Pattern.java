@@ -84,6 +84,24 @@ public class Pattern {
         Tommy's methods dont look!!! O_o
      */
 
+    private void updateOrderPattern (String c) {
+
+    }
+    private void updatePositionPattern (int x, int y) {
+
+    }
+    private void updateQuantityPattern (String c) {
+        if (c.equals("R")) {
+            this.quantityPosition[0]++;
+        } else if (c.equals("B")) {
+            this.quantityPosition[1]++;
+        } else if (c.equals("Y")) {
+            this.quantityPosition[2]++;
+        } else {
+            this.quantityPosition[3]++;
+        }
+    }
+
     private String getColor (String c) {
         if (c.equals("R")) {
             return Pattern.COLORS[0];
