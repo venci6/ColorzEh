@@ -20,6 +20,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
 
+
 import java.util.concurrent.locks.Lock;
 
 
@@ -27,7 +28,7 @@ public class LockScreen extends Activity implements View.OnClickListener{
 
 
     boolean unlock = false;
-    String[] password = {"RGB" , "", ""};
+    String[] password = {"1", "RGB" , "", ""};
     Pattern pat = new Pattern(password, 123L);
     private static final String TAG = LockScreen.class.getSimpleName();
     ImageButton tl, tm, tr, ml, mm, mr, bl, bm, br;
@@ -39,14 +40,16 @@ public class LockScreen extends Activity implements View.OnClickListener{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lock_screen);
-        Thread checkOpen = new Thread()
+        /*Thread checkOpen = new Thread()
         {
             public void run(){
-                if (unlock)
-                        finish();
+                while(true) {
+                    if (unlock){
+                        finish();}
+                }
             }
         };
-        checkOpen.start();
+        checkOpen.start();*/
         initializeButtons();
 
     }
@@ -86,59 +89,59 @@ public class LockScreen extends Activity implements View.OnClickListener{
             case R.id.top_left:
                 locationX = 0;
                 locationY = 0;
-                pat.input(locationX, locationY);
+                //pat.input(locationX, locationY);
                 Log.v(TAG, "top left was clicked. Hoorah. Hodor.");
 
                 break;
             case R.id.top_mid:
                 locationX = 1;
                 locationY = 0;
-                pat.input(locationX, locationY);
+                //pat.input(locationX, locationY);
                 Log.v(TAG, "top mid was clicked. Hoorah. Hodor.");
                 break;
             case R.id.top_right:
                 locationX = 2;
                 locationY = 0;
-                pat.input(locationX, locationY);
+                //pat.input(locationX, locationY);
                 Log.v(TAG, "top right was clicked. Hoorah. Hodor.");
                 break;
             case R.id.mid_left:
                 locationX = 0;
                 locationY = 1;
-                pat.input(locationX, locationY);
+                //pat.input(locationX, locationY);
                 Log.v(TAG, "mid left was clicked. Hoorah. Hodor.");
                 break;
 
             case R.id.mid_mid:
                 locationX = 1;
                 locationY = 1;
-                pat.input(locationX, locationY);
+                //pat.input(locationX, locationY);
                 Log.v(TAG, "mid mid was clicked. Hoorah. Hodor.");
                 break;
             case R.id.mid_right:
                 locationX = 2;
                 locationY = 1;
-                pat.input(locationX, locationY);
+                //pat.input(locationX, locationY);
                 Log.v(TAG, "mid right was clicked. Hoorah. Hodor.");
                 break;
 
             case R.id.bot_left:
                 locationX = 0;
                 locationY = 2;
-                pat.input(locationX, locationY);
+                //pat.input(locationX, locationY);
                 Log.v(TAG, "bot left was clicked. Hoorah. Hodor.");
                 break;
             case R.id.bot_mid:
                 locationX = 1;
                 locationY = 1;
-                pat.input(locationX, locationY);
+                //pat.input(locationX, locationY);
                 Log.v(TAG, "bot mid was clicked. Hoorah. Hodor.");
                 break;
 
             case R.id.bot_right:
                 locationX = 2;
                 locationY = 2;
-                pat.input(locationX, locationY);
+                //pat.input(locationX, locationY);
                 Log.v(TAG, "bot right was clicked. Hoorah. Hodor.");
                 break;
         }}
