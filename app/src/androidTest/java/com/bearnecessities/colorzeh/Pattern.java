@@ -14,13 +14,13 @@ public class Pattern {
     private final String positionPattern;   // the pattern of clicking required
     private final String quantityPattern;   // the quantities required
 
-    private String layout;                  // the order of color blocks
+    private String layout;                  // the order of color blocks from left to right and top to bottom
 
     private int orderPosition;              // the position in the order pattern
     private int positionPosition;           // the position in the position pattern
     private int[] quantityPosition;         // the position of the quantities
 
-    private Random rand;                    // for randomly changing the grid
+    private Random rand;                    // for randomly changing the entire grid layout
 
     /**
      * This is the only constructor for the class Pattern
