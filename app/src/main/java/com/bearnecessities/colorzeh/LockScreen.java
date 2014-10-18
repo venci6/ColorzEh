@@ -144,7 +144,11 @@ public class LockScreen extends Activity implements View.OnClickListener{
                 //pat.input(locationX, locationY);
                 Log.v(TAG, "bot right was clicked. Hoorah. Hodor.");
                 break;
-        }}
+        }
+
+        this.updateColorGrid(pat.updatePattern());
+
+    }
 
 
     @Override
@@ -164,6 +168,67 @@ public class LockScreen extends Activity implements View.OnClickListener{
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    public void updateColorGrid(String color_string) {
+        int i = 0;
+
+        while(i < color_string.length()) {
+            char color = color_string.charAt(i);
+            int newColor;
+
+            switch(color) {
+                case 'R':
+                    newColor = R.color.Red;
+                    break;
+                case 'G':
+                    newColor = R.color.Green;
+                    break;
+                case 'Y':
+                    newColor = R.color.Yellow;
+                    break;
+                case 'B':
+                    newColor = R.color.Blue;
+                    break;
+                default:
+                    newColor = R.color.White;
+                    break;
+            }
+            switch(i) {
+                case 0:
+                    tl.setBackgroundColor(newColor);
+                    break;
+                case 1:
+                    tm.setBackgroundColor(newColor);
+                    break;
+                case 2:
+                    tr.setBackgroundColor(newColor);
+                    break;
+                case 3:
+                    ml.setBackgroundColor(newColor);
+                    break;
+                case 4:
+                    mm.setBackgroundColor(newColor);
+                    break;
+                case 5:
+                    mr.setBackgroundColor(newColor);
+                    break;
+                case 6:
+                    bl.setBackgroundColor(newColor);
+                    break;
+                case 7:
+                    bm.setBackgroundColor(newColor);
+                    break;
+                case 8:
+                    br.setBackgroundColor(newColor);
+                    break;
+                default:
+                    mm.setBackgroundColor(newColor);
+                    break;
+            }
+            i++;
+        }
+
     }
 
 
