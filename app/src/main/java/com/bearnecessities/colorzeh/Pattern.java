@@ -209,7 +209,7 @@ public class Pattern {
         String layoutBuilder = "";
 
         for (int c = 0; c < 9; c++) {
-            layoutBuilder += Pattern.COLORS[this.rand.nextInt() % 4];
+            //layoutBuilder += Pattern.COLORS[this.rand.nextInt() % 4].substring(0,1);
         }
 
         //return layoutBuilder;
