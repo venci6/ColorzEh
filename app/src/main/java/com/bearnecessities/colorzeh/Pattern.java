@@ -86,7 +86,7 @@ public class Pattern {
             unlocked = this.positionPosition >= this.positionPattern.length();
         } else {
             updateQuantityPattern(getColorAtPosition(x,y).substring(0,1));
-            unlocked = false; //checkQuantities();
+            unlocked = checkQuantities();
         }
         
         return unlocked;
@@ -101,6 +101,13 @@ public class Pattern {
         Tommy's methods don't look!!! O_o
      */
 
+    private boolean checkQuantities() {
+        return ((this.quantityPattern.substring(0,1).equals(this.quantityPosition[0] + "")) &&
+                (this.quantityPattern.substring(1,2).equals(this.quantityPosition[1] + ""))) &&
+                ((this.quantityPattern.substring(2,3).equals(this.quantityPosition[2] + "")) &&
+                 (this.quantityPattern.substring(3,4).equals(this.quantityPosition[3] + "")));
+    }
+
     private void updateOrderPattern (String c) {
         String expected = this.orderPattern.substring(this.orderPosition, this.orderPosition + 1);
         if (c.equals(expected)) {   // right input was entered
@@ -112,7 +119,8 @@ public class Pattern {
 
     private void updatePositionPattern (int x, int y) {
         String expected = this.positionPattern.substring(this.positionPosition, this.positionPosition + 2);
-        if (c.equals(expected)) {
+        String result = "" + x + "" + y;
+        if (result.equals(expected)) {
             this.positionPosition += 2;
         } else {
             this.positionPosition = 0;
