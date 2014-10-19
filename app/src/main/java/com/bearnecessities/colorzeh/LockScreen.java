@@ -25,9 +25,9 @@ import java.util.concurrent.locks.Lock;
 
 
 public class LockScreen extends Activity implements View.OnClickListener{
-
     boolean unlock = false;
-    String[] password = {"1", "RGBYR" , "000102", "4110"};
+    String[] password = {"ORDER", "RGBYR" , "000102", "4110"};
+    // password[0] = Pattern.ORDER; don't know why this line is not working
     Pattern pat = new Pattern(password, 123L);
     private static final String TAG = LockScreen.class.getSimpleName();
     ImageButton tl, tm, tr, ml, mm, mr, bl, bm, br;
