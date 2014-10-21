@@ -19,7 +19,7 @@
             android:contentDescription="@string/TLBtn"
             android:id="@+id/top_left"
             android:layout_width="100dp"
-            android:layout_height="100dp"
+            android:layout_height="150dp"
             android:layout_marginRight="5dp"
             android:gravity="center"
             android:background="@color/Red"/>
@@ -27,7 +27,7 @@
             android:contentDescription="@string/TMBtn"
             android:id="@+id/top_mid"
             android:layout_width="100dp"
-            android:layout_height="100dp"
+            android:layout_height="150dp"
             android:layout_marginRight="5dp"
             android:background="@color/Blue"/>
 
@@ -35,7 +35,7 @@
             android:contentDescription="@string/TRBtn"
             android:id="@+id/top_right"
             android:layout_width="100dp"
-            android:layout_height="100dp"
+            android:layout_height="150dp"
             android:background="@color/Yellow"/>
     </LinearLayout>
 
@@ -51,21 +51,21 @@
             android:id="@+id/mid_left"
             android:layout_marginRight="5dp"
             android:layout_width="100dp"
-            android:layout_height="100dp"
+            android:layout_height="150dp"
             android:background="@color/Yellow"/>
         <ImageButton
             android:contentDescription="@string/MMBtn"
             android:id="@+id/mid_mid"
             android:layout_marginRight="5dp"
             android:layout_width="100dp"
-            android:layout_height="100dp"
+            android:layout_height="150dp"
             android:background="@color/Green"/>
 
         <ImageButton
             android:contentDescription="@string/MRBtn"
             android:id="@+id/mid_right"
             android:layout_width="100dp"
-            android:layout_height="100dp"
+            android:layout_height="150dp"
             android:background="@color/Red"/>
     </LinearLayout>
 
@@ -82,21 +82,21 @@
             android:id="@+id/bot_left"
             android:layout_marginRight="5dp"
             android:layout_width="100dp"
-            android:layout_height="100dp"
+            android:layout_height="150dp"
             android:background="@color/Green"/>
         <ImageButton
             android:contentDescription="@string/BMBtn"
             android:id="@+id/bot_mid"
             android:layout_marginRight="5dp"
             android:layout_width="100dp"
-            android:layout_height="100dp"
+            android:layout_height="150dp"
             android:background="@color/Blue"/>
 
         <ImageButton
             android:contentDescription="@string/BRBtn"
             android:id="@+id/bot_right"
             android:layout_width="100dp"
-            android:layout_height="100dp"
+            android:layout_height="150dp"
             android:background="@color/Yellow"/>
     </LinearLayout>
 </LinearLayout>
