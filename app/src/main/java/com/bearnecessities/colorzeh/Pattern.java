@@ -14,7 +14,7 @@ import android.util.Log;
  *  - Add more implementation for different orders of patterns.
  *  - Test all types of input patterns
  *      = ORDER test (fully tested)
- *      = POSITION test (tested and seems to be working not sure how the bug occurred)
+ *      = POSITION test (fully tested)
  *      = QUANTITY test (fully tested)
  *      = Two mode tests ?????
  *      = ORDER_POSITION_QUANTITY test ()
@@ -84,23 +84,23 @@ public class Pattern {
      *             String[] array = {Pattern.POSITION, "", "010203", "0000"};
      *             Pattern p = new Pattern (array, 1234L);
      */
-    public Pattern (String[] patterns, long seed) {
+    public Pattern (String mode, String[] patterns, long seed) {
 
         // some error checking
-        if (patterns.length != 4) { System.exit(3);}
-        if (patterns[2].length() % 2 != 0) { System.exit(3);}
-        if (patterns[3].length() != 4) {System.exit(3);}
+        if (patterns.length != 3) { System.exit(3);}
+        if (patterns[1].length() % 2 != 0) { System.exit(3);}
+        if (patterns[2].length() != 4) {System.exit(3);}
 
         // assign pattern items to the object
-        this.whichPattern = patterns[0];
-        this.orderPattern = patterns[1];
-        this.positionPattern = patterns[2];
+        this.whichPattern = mode;
+        this.orderPattern = patterns[0];
+        this.positionPattern = patterns[1];
         this.quantityPattern = new int[4];
 
-        this.quantityPattern[0] = Integer.parseInt(patterns[3].substring(0,1));
-        this.quantityPattern[1] = Integer.parseInt(patterns[3].substring(1,2));
-        this.quantityPattern[2] = Integer.parseInt(patterns[3].substring(2,3));
-        this.quantityPattern[3] = Integer.parseInt(patterns[3].substring(3,4));
+        this.quantityPattern[0] = Integer.parseInt(patterns[2].substring(0,1));
+        this.quantityPattern[1] = Integer.parseInt(patterns[2].substring(1,2));
+        this.quantityPattern[2] = Integer.parseInt(patterns[2].substring(2,3));
+        this.quantityPattern[3] = Integer.parseInt(patterns[2].substring(3,4));
 
         // set up all the internal object values
         this.orderPosition = 0;
