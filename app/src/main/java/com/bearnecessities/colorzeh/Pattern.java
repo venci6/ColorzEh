@@ -1,5 +1,6 @@
 package com.bearnecessities.colorzeh;
 
+import java.util.Arrays;
 import java.util.Random;
 import android.util.Log;
 
@@ -323,12 +324,12 @@ public class Pattern {
             if (colorCount[i] == 0) {
                 int replaceIndex = layoutBuilder.indexOf(mostRepresentedColor);
                 if (replaceIndex == 0) {
-                   layoutBuilder = Pattern.COLORS[i] + layoutBuilder.substring(replaceIndex + 1);
-                    } else {
-                    layoutBuilder = layoutBuilder.substring(0, replaceIndex) + Pattern.COLORS[i] + layoutBuilder.substring(replaceIndex + 1);
-                    }
+                   layoutBuilder = Pattern.COLORS[i].substring(0,1) + layoutBuilder.substring(replaceIndex + 1);
+                } else {
+                    layoutBuilder = layoutBuilder.substring(0, replaceIndex) + Pattern.COLORS[i].substring(0,1) + layoutBuilder.substring(replaceIndex + 1);
                 }
             }
+        }
         return layoutBuilder;
      }
 
@@ -358,12 +359,15 @@ public class Pattern {
             layoutBuilder += randomColor;
         }
 
-        String mostRepresentedColor = Pattern.COLORS[0];
-        for (int c = 1; c < colorCount.length; c++) {
-            if (colorCount[c] < colorCount[c-1]) {
-                mostRepresentedColor = Pattern.COLORS[c];
+        int largestValue = colorCount[0];
+        String mostRepresentedColor = Pattern.COLORS[0].substring(0,1);
+        for (int c = 0; c < colorCount.length; c++) {
+            if (colorCount[c] >= largestValue) {
+                largestValue = colorCount[c];
+                mostRepresentedColor = Pattern.COLORS[c].substring(0,1);
             }
         }
+        Log.e(TAG, "largest value is "+largestValue+" most represented color is "+mostRepresentedColor);
         layoutBuilder = newLayout(colorCount, layoutBuilder, mostRepresentedColor);
         Log.v(TAG, layoutBuilder);
         return layoutBuilder;
