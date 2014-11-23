@@ -368,8 +368,8 @@ public class Pattern {
             }
         }
         Log.e(TAG, "largest value is "+largestValue+" most represented color is "+mostRepresentedColor);
-        layoutBuilder = newLayout(colorCount, layoutBuilder, mostRepresentedColor);
         Log.v(TAG, layoutBuilder);
-        return layoutBuilder;
+        
+        return newLayout(colorCount, layoutBuilder, mostRepresentedColor);
     }
 }
