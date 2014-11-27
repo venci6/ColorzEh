@@ -1,5 +1,6 @@
 package com.bearnecessities.colorzeh;
 
+import java.util.Arrays;
 import java.util.Random;
 import android.util.Log;
 
@@ -318,6 +319,20 @@ public class Pattern {
         }
     }
 
+    private String newLayout(int[] colorCount, String layoutBuilder, String mostRepresentedColor) {
+        for (int i = 0; i < colorCount.length; i++) {
+            if (colorCount[i] == 0) {
+                int replaceIndex = layoutBuilder.indexOf(mostRepresentedColor);
+                if (replaceIndex == 0) {
+                   layoutBuilder = Pattern.COLORS[i].substring(0,1) + layoutBuilder.substring(replaceIndex + 1);
+                } else {
+                    layoutBuilder = layoutBuilder.substring(0, replaceIndex) + Pattern.COLORS[i].substring(0,1) + layoutBuilder.substring(replaceIndex + 1);
+                }
+            }
+        }
+        return layoutBuilder;
+     }
+
     /**
      * This will randomly generate a new layout
      * @return the layout generated
@@ -329,12 +344,32 @@ public class Pattern {
         // - Make the randomness better.
 
         String layoutBuilder = "";
-
+        int[] colorCount = {0,0,0,0};       //RBYG
         for (int c = 0; c < 9; c++) {
-            layoutBuilder += Pattern.COLORS[this.rand.nextInt(4)].substring(0,1);
+            String randomColor = Pattern.COLORS[this.rand.nextInt(4)].substring(0,1);
+            if (randomColor.equals("R")) {
+                    colorCount[0]++;
+            } else if (randomColor.equals("B")) {
+                colorCount[1]++;
+            } else if (randomColor.equals("Y")) {
+                colorCount[2]++;
+            } else {
+                colorCount[3]++;
+            }
+            layoutBuilder += randomColor;
         }
 
+        int largestValue = colorCount[0];
+        String mostRepresentedColor = Pattern.COLORS[0].substring(0,1);
+        for (int c = 0; c < colorCount.length; c++) {
+            if (colorCount[c] >= largestValue) {
+                largestValue = colorCount[c];
+                mostRepresentedColor = Pattern.COLORS[c].substring(0,1);
+            }
+        }
+        Log.e(TAG, "largest value is "+largestValue+" most represented color is "+mostRepresentedColor);
         Log.v(TAG, layoutBuilder);
-        return layoutBuilder;
+        
+        return newLayout(colorCount, layoutBuilder, mostRepresentedColor);
     }
 }
