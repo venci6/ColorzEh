@@ -204,7 +204,7 @@ public class LockScreen extends Activity implements View.OnClickListener {
         int id = item.getItemId();
         switch(id) {
             case R.id.action_settings:
-                Intent settings = new Intent(LockScreen.this, SetPassword.class);
+                Intent settings = new Intent(LockScreen.this, Settings.class);
                 startActivity(settings);
                 break;
             case R.id.action_about:

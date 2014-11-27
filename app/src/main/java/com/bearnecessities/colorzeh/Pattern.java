@@ -367,8 +367,8 @@ public class Pattern {
                 mostRepresentedColor = Pattern.COLORS[c].substring(0,1);
             }
         }
-        Log.e(TAG, "largest value is "+largestValue+" most represented color is "+mostRepresentedColor);
-        Log.v(TAG, layoutBuilder);
+        //Log.e(TAG, "largest value is "+largestValue+" most represented color is "+mostRepresentedColor);
+        //Log.v(TAG, layoutBuilder);
         
         return newLayout(colorCount, layoutBuilder, mostRepresentedColor);
     }

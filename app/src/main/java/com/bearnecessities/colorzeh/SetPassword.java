@@ -26,27 +26,34 @@ public class SetPassword extends Activity implements View.OnClickListener{
     private static final String[] password = {"RGBYR" , "000102", "4110"};
     Pattern pat = new Pattern(Pattern.ORDER, password, System.currentTimeMillis());
 
-    //EditText seqOrder, locOrder, quantOrder;
     Spinner seqOrder, locOrder, quantOrder;
+    int seqNum, locNum, quantNum;
+
     CheckBox seqBox, locBox, quantBox;
     boolean seqChecked, locChecked, quantChecked;
-    Button seqSet, locSet, quantSet, finish, verify;
-    String seqPwd ="", locPwd="";
-    int seqNum, locNum, quantNum;
-    String[] mode = {"","",""};
-    String[] entirePassword = {"","",""};
-    String entireMode = "";
 
+    Button seqSet, locSet, quantSet, finish, verify;
+    private ImageButton tl, tm, tr, ml, mm, mr, bl, bm, br;
+
+    String seqPwd ="", locPwd="";
     int[] quantPwd={0,0,0,0};
 
-    // 0 - ORDER, 1 - POSITION, 2 - QUANTITY, -1 - NOT SET
+    // pattern modes in the order user sets ex[ODER, POSITION, ]
+    String[] mode = {"","",""};
+
+    // ex["RRR", "0000", 0000]
+    String[] entirePassword = {"","",""};
+
+    // ex[ORDER_QUANTITY_POSITION]
+    String entireMode = "";
+
+    // -1 - NOTHING
+    // SETTING PW: 0 - ORDER, 1 - POSITION, 2 - QUANTITY
+    // VERIFYING PW:
     int passwordMode = -1;
 
+    // for pattern combinations
     int numModes = 0;
-
-    private ImageButton tl, tm, tr, ml, mm, mr, bl, bm, br;
-    // constant to determine which sub-activity returns
-    private static final int REQUEST_CODE = 10;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,15 +69,13 @@ public class SetPassword extends Activity implements View.OnClickListener{
         locOrder = (Spinner) findViewById(R.id.locationOrder);
         quantOrder = (Spinner) findViewById(R.id.quantityOrder);
 
-        // Create an ArrayAdapter using the string array and a default spinner layout
+
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
                 R.array.patterns_array, android.R.layout.simple_spinner_item);
-        // Specify the layout to use when the list of choices appears
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        // Apply the adapter to the spinner
-        seqOrder.setAdapter(adapter);
 
-        locOrder.setSelection(0);
+        seqOrder.setAdapter(adapter);
+        seqOrder.setSelection(0);
         seqOrder.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
@@ -155,6 +160,7 @@ public class SetPassword extends Activity implements View.OnClickListener{
     @Override
     public void onClick(View v) {
         int id = v.getId();
+
         if(isGridButton(id)) {
             int locationX = 0, locationY = 0;
             String color;
@@ -164,47 +170,38 @@ public class SetPassword extends Activity implements View.OnClickListener{
                 case R.id.top_left_set:
                     locationX = 0;
                     locationY = 0;
-                    Log.v(TAG, "top left was clicked. Hoorah. Hodor.");
                     break;
                 case R.id.top_mid_set:
                     locationX = 1;
                     locationY = 0;
-                    Log.v(TAG, "top mid was clicked. Hoorah. Hodor.");
                     break;
                 case R.id.top_right_set:
                     locationX = 2;
                     locationY = 0;
-                    Log.v(TAG, "top r was clicked. Hoorah. Hodor.");
                     break;
                 case R.id.mid_left_set:
                     locationX = 0;
                     locationY = 1;
-                    Log.v(TAG, "mid left was clicked. Hoorah. Hodor.");
                     break;
                 case R.id.mid_mid_set:
                     locationX = 1;
                     locationY = 1;
-                    Log.v(TAG, "mid mid was clicked. Hoorah. Hodor.");
                     break;
                 case R.id.mid_right_set:
                     locationX = 2;
                     locationY = 1;
-                    Log.v(TAG, "mid rogjt was clicked. Hoorah. Hodor.");
                     break;
                 case R.id.bot_left_set:
                     locationX = 0;
                     locationY = 2;
-                    Log.v(TAG, "bot left was clicked. Hoorah. Hodor.");
                     break;
                 case R.id.bot_mid_set:
                     locationX = 1;
                     locationY = 2;
-                    Log.v(TAG, "bot mid was clicked. Hoorah. Hodor.");
                     break;
                 case R.id.bot_right_set:
                     locationX = 2;
                     locationY = 2;
-                    Log.v(TAG, "bot rigjt was clicked. Hoorah. Hodor.");
                     break;
             }
             color = pat.getColorAtPosition(locationX,locationY);
@@ -258,78 +255,58 @@ public class SetPassword extends Activity implements View.OnClickListener{
 
 
         } else {
-            Log.v(TAG, "pw mode " + passwordMode);
             switch (id) {
                 case R.id.sequenceSetBtn:
-                    Log.v(TAG, "clicked on seq");
-
                     if (seqSet.getText().toString().equalsIgnoreCase("Set")) {
                         if(passwordMode == -1) {
-                            finish.setEnabled(false);
-                            seqPwd = "";
                             seqSet.setText("Finish");
-                            verify.setEnabled(false);
                             passwordMode = 0;
+                            seqPwd = "";
+
+                            afterPWSet();
                         } else {
                             Toast.makeText(this, "Please finish setting a password before trying to set another one", Toast.LENGTH_SHORT).show();
                         }
-
-
                     } else if (seqSet.getText().toString().equalsIgnoreCase("Finish")) {
-                        passwordMode = -1;
                         seqSet.setText("Set");
-
-                        verifyEnabled();
-
-                        Toast.makeText(this, seqPwd + " ", Toast.LENGTH_SHORT).show();
+                        afterPWFinish();
                     }
-
-
-
                     break;
 
                 case R.id.locationSetBtn:
-                    Log.v(TAG, "clicked on loc");
-
                     if (locSet.getText().toString().equalsIgnoreCase("Set")) {
                         if(passwordMode == -1) {
-                            finish.setEnabled(false);
-                            locPwd = "";
                             locSet.setText("Finish");
-                            verify.setEnabled(false);
                             passwordMode = 1;
+                            locPwd = "";
+
+                            afterPWSet();
                         } else {
                             Toast.makeText(this, "Please finish setting a password before trying to set another one", Toast.LENGTH_SHORT).show();
                         }
                     } else if (locSet.getText().toString().equalsIgnoreCase("Finish")) {
-                        passwordMode = -1;
                         locSet.setText("Set");
-                        verifyEnabled();
-                        Toast.makeText(this, locPwd + " ", Toast.LENGTH_SHORT).show();
+                        afterPWFinish();
                     }
                     break;
 
                 case R.id.quantitySetBtn:
-                    Log.v("set_password", "clicked on quan");
-
                     if (quantSet.getText().toString().equalsIgnoreCase("Set")) {
                         if(passwordMode == -1) {
-                            finish.setEnabled(false);
+                            quantSet.setText("Finish");
+                            passwordMode = 2;
                             quantPwd[0] = 0;
                             quantPwd[1] = 0;
                             quantPwd[2] = 0;
                             quantPwd[3] = 0;
-                            quantSet.setText("Finish");
-                            verify.setEnabled(false);
-                            passwordMode = 2;
+
+                            afterPWSet();
                         }else {
                             Toast.makeText(this, "Please finish setting a password before trying to set another one", Toast.LENGTH_SHORT).show();
                         }
                     } else if (quantSet.getText().toString().equalsIgnoreCase("Finish")) {
-                        passwordMode = -1;
                         quantSet.setText("Set");
-                        verifyEnabled();
-                        Toast.makeText(this, Arrays.toString(quantPwd) + " ", Toast.LENGTH_SHORT).show();
+                        afterPWFinish();
                     }
                     break;
                 case R.id.verify:
@@ -342,10 +319,11 @@ public class SetPassword extends Activity implements View.OnClickListener{
                             Toast.makeText(this, "You cannot have two patterns have the same order number!", Toast.LENGTH_SHORT).show();
                         } else {
                             composePasswordOrder();
+
                             if (checkOrderNumbers()) {
                                 verifyPassword();
                             } else {
-                                Toast.makeText(this, "Please your order from 1 and increment", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(this, "Please order from 1 and increment", Toast.LENGTH_SHORT).show();
                             }
                         }
                     }
@@ -356,7 +334,18 @@ public class SetPassword extends Activity implements View.OnClickListener{
                     break;
             }
         }
+    }
 
+    private void afterPWSet() {
+        disableCheckSpins();
+        verify.setEnabled(false);
+        finish.setEnabled(false);
+    }
+
+    private void afterPWFinish() {
+        passwordMode = -1;
+        enableCheckSpins();
+        verifyEnabled();
     }
 
     private void disableButtons() {
@@ -364,6 +353,16 @@ public class SetPassword extends Activity implements View.OnClickListener{
         locSet.setEnabled(false);
         quantSet.setEnabled(false);
 
+        disableCheckSpins();
+    }
+    private void enableButtons() {
+        seqSet.setEnabled(true);
+        locSet.setEnabled(true);
+        quantSet.setEnabled(true);
+
+        enableCheckSpins();
+    }
+    private void disableCheckSpins() {
         seqOrder.setEnabled(false);
         quantOrder.setEnabled(false);
         locOrder.setEnabled(false);
@@ -371,20 +370,15 @@ public class SetPassword extends Activity implements View.OnClickListener{
         seqBox.setEnabled(false);
         locBox.setEnabled(false);
         quantBox.setEnabled(false);
-
     }
-    private void enableButtons() {
-        seqSet.setEnabled(true);
-        locSet.setEnabled(true);
-        quantSet.setEnabled(true);
+    private void enableCheckSpins() {
+        seqBox.setEnabled(true);
+        locBox.setEnabled(true);
+        quantBox.setEnabled(true);
 
         seqOrder.setEnabled(true);
         quantOrder.setEnabled(true);
         locOrder.setEnabled(true);
-
-        seqBox.setEnabled(true);
-        locBox.setEnabled(true);
-        quantBox.setEnabled(true);
     }
     private void verifyPassword() {
         composePassword();
@@ -408,7 +402,7 @@ public class SetPassword extends Activity implements View.OnClickListener{
             mode[seqNum-1] = "ORDER";
         }
         if(locChecked) {
-            mode[locNum-1] = "SEQUENCE";
+            mode[locNum-1] = "POSITION";
         }
         if(quantChecked) {
             mode[quantNum-1] = "QUANTITY";
@@ -447,30 +441,6 @@ public class SetPassword extends Activity implements View.OnClickListener{
         }
         return startFromOne;
     }
-
-//    @Override
-//    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-//        if (resultCode == RESULT_OK && requestCode == REQUEST_CODE) {
-//            if (data.hasExtra("PASSWORD") && data.hasExtra("PASSWORD_MODE") ) {
-//                String mode = data.getExtras().getString("PASSWORD_MODE");
-//                String pwd = data.getExtras().getString("PASSWORD");
-//
-//                if (mode.equalsIgnoreCase("ORDER")) {
-//                    seqPwd = pwd;
-//                    Toast.makeText(this, mode + " " + seqPwd, Toast.LENGTH_SHORT).show();
-//                } else if(mode.equalsIgnoreCase("POSITION")) {
-//                    locPwd = pwd;
-//                    Toast.makeText(this, mode + " " + pwd, Toast.LENGTH_SHORT).show();
-//                } else {
-//                    quantPwd = data.getExtras().getIntArray("PASSWORD");
-//
-//                }
-//
-//
-//
-//            }
-//        }
-//    }
 
     private void verifyEnabled() {
         boolean bool = false;
