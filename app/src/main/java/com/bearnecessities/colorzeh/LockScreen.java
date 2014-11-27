@@ -1,12 +1,19 @@
 package com.bearnecessities.colorzeh;
 
 import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.TextView;
+
+import java.util.Arrays;
 
  /*
               0 1 2
@@ -22,24 +29,50 @@ public class LockScreen extends Activity implements View.OnClickListener {
     private final String TAG = LockScreen.class.getSimpleName();
 
     // create pattern class
-    private static final String[] password = {"RGBYR" , "000102", "4110"};
+    Pattern pat;
 
-    Pattern pat = new Pattern(Pattern.ORDER, password, 123L);
 
     private ImageButton tl, tm, tr, ml, mm, mr, bl, bm, br;
+
+    SharedPreferences sharedpreferences;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lock_screen);
 
+        sharedpreferences = getSharedPreferences(Welcome.MY_PREFERENCES, Context.MODE_PRIVATE);
+
+        getPassword();
+
         initializeButtons();
         updateColorGrid();
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        getPassword();
+        updateColorGrid();
+    }
+
+    private void getPassword() {
+        String pwdMode = sharedpreferences.getString(Welcome.pattern, "");
+        String pw = sharedpreferences.getString(Welcome.pass, "");
+        String[] pwSplit = pw.split("/");
+
+        Log.v(TAG, "mode " + pwdMode + " password " + Arrays.toString(pwSplit));
+
+        pat = new Pattern(pwdMode, pwSplit, System.currentTimeMillis());
+    }
 
     @Override
     public void onClick(View v) {
+        String color;
+        char c;
         int locationX = 0;
         int locationY = 0;
         boolean unlock;
@@ -91,10 +124,13 @@ public class LockScreen extends Activity implements View.OnClickListener {
                 Log.v(TAG, "bot right was clicked. Hoorah. Hodor.");
                 break;
         }
+        color = pat.getColorAtPosition(locationX,locationY);
+        Log.v(TAG, "X: "+ locationX + " Y: " + locationY + " = "+ color);
 
-        Log.v(TAG, "X: "+ locationX + " Y: " + locationY + " = "+ pat.getColorAtPosition(locationX,locationY));
+
         unlock = pat.input(locationX, locationY);
         Log.v(TAG, unlock + "");
+
         if (unlock) {
             this.finish();
         } else {
@@ -103,29 +139,7 @@ public class LockScreen extends Activity implements View.OnClickListener {
         }
     }
 
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.lock_screen, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-        if (id == R.id.action_settings) {
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
-
-    private void initializeButtons()
-    {
+    private void initializeButtons() {
         tl = (ImageButton)  findViewById(R.id.top_left);
         tm = (ImageButton)  findViewById(R.id.top_mid);
         tr = (ImageButton)  findViewById(R.id.top_right);
@@ -148,7 +162,6 @@ public class LockScreen extends Activity implements View.OnClickListener {
     }
 
     private void setBtnColor(ImageButton btn, String color ) {
-
         if(color.equals("RED")) {
             btn.setBackgroundColor(getResources().getColor(R.color.Red));
         } else if(color.equals("BLUE")) {
@@ -161,6 +174,7 @@ public class LockScreen extends Activity implements View.OnClickListener {
             btn.setBackgroundColor(getResources().getColor(R.color.White));
         }
     }
+
     private void updateColorGrid() {
         setBtnColor(tl, pat.getColorAtPosition(0,0));
         setBtnColor(tm, pat.getColorAtPosition(1,0));
@@ -175,5 +189,29 @@ public class LockScreen extends Activity implements View.OnClickListener {
         setBtnColor(br, pat.getColorAtPosition(2,2));
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.lock_screen, menu);
+        return true;
+    }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.set_password.
+        int id = item.getItemId();
+        switch(id) {
+            case R.id.action_settings:
+                Intent settings = new Intent(LockScreen.this, SetPassword.class);
+                startActivity(settings);
+                break;
+            case R.id.action_about:
+                Intent about = new Intent(LockScreen.this, Welcome.class);
+                startActivity(about);
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 }
