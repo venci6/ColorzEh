@@ -18,13 +18,15 @@
 
         <activity
             android:name=".LockScreen"
-            android:label="@string/app_name" >
+            android:label="@string/app_name"
+            android:screenOrientation="portrait">
         </activity>
 
         <activity
             android:name=".SetPassword"
             android:label="@string/set_password"
-            android:parentActivityName=".Welcome">
+            android:parentActivityName=".Welcome"
+            android:screenOrientation="portrait">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".LockScreen"/>
