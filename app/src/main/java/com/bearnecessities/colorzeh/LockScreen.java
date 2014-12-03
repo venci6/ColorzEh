@@ -16,11 +16,12 @@ import android.widget.TextView;
 import java.util.Arrays;
 
  /*
-              0 1 2
+              0 1 2 n-1
               _ _ _
          0   |_|_|_|
          1   |_|_|_|
          2   |_|_|_|
+         n-1
 
  */
 
@@ -66,7 +67,7 @@ public class LockScreen extends Activity implements View.OnClickListener {
 
         Log.v(TAG, "mode " + pwdMode + " password " + Arrays.toString(pwSplit));
 
-        pat = new Pattern(pwdMode, pwSplit, System.currentTimeMillis());
+        pat = new Pattern(pwdMode, 3, pwSplit, System.currentTimeMillis());
     }
 
     @Override
