@@ -25,7 +25,7 @@ public class SetPassword extends Activity implements View.OnClickListener{
     private final String TAG = LockScreen.class.getSimpleName();
 
     private static final String[] password = {"RGBYR" , "000102", "4110"};
-    Pattern pat = new Pattern(Pattern.ORDER, password, System.currentTimeMillis());
+    Pattern pat = new Pattern(Pattern.ORDER, 3, password, System.currentTimeMillis());
 
     Spinner seqOrder, locOrder, quantOrder;
     int seqNum, locNum, quantNum;
@@ -399,7 +399,7 @@ public class SetPassword extends Activity implements View.OnClickListener{
 
         passwordMode = 3;
         Log.v(TAG, "entire mode =" + entireMode + " entirePassword = "+Arrays.toString(entirePassword));
-        pat = new Pattern(entireMode, entirePassword,System.currentTimeMillis());
+        pat = new Pattern(entireMode, 3, entirePassword,System.currentTimeMillis());
         disableButtons();
         updateColorGrid();
         verify.setText("Stop");

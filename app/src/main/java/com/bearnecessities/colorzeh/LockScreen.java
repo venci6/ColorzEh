@@ -14,8 +14,6 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
-
 import java.util.Arrays;
 
  /*
@@ -32,11 +30,10 @@ public class LockScreen extends Activity implements View.OnClickListener {
     private final String TAG = LockScreen.class.getSimpleName();
 
     // create pattern class
-    Pattern pat = new Pattern(Pattern.ORDER, new String[] {"RGBYR" , "000102", "4110"}, 123L);
+    Pattern pat = new Pattern(Pattern.ORDER, 3, new String[] {"RGBYR" , "000102", "4110"}, 123L);
 
 
     private ImageButton tl, tm, tr, ml, mm, mr, bl, bm, br;
-
 
     SharedPreferences sharedpreferences;
     public static final String MY_PREFERENCES = "MyPrefs";
@@ -44,6 +41,8 @@ public class LockScreen extends Activity implements View.OnClickListener {
     public static final String pass = "passwordKey";
     int c1, c2, c3, c4;
     String[] colors;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,7 +86,7 @@ public class LockScreen extends Activity implements View.OnClickListener {
 
             Log.v(TAG, "mode " + pwdMode + " password " + Arrays.toString(pwSplit));
 
-            pat = new Pattern(pwdMode, pwSplit, System.currentTimeMillis());
+            pat = new Pattern(pwdMode,3, pwSplit, System.currentTimeMillis());
             return true;
         }
 
