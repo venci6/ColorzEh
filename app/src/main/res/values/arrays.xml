@@ -5,4 +5,26 @@
         <item>2</item>
         <item>3</item>>
     </string-array>
+
+    <string-array name="colors_array">
+        <item>red</item>
+        <item>blue</item>
+        <item>green</item>
+        <item>yellow</item>
+        <item>orange</item>
+        <item>purple</item>
+        <item>pink</item>
+    </string-array>
+
+    <string-array name="color_values_array">
+        <item>#FF3333</item>
+        <item>#3333FF</item>
+        <item>#66FF66</item>
+        <item>#FFFF66</item>
+
+        <item>#FF9933</item>
+        <item>#9933FF</item>
+        <item>#FF66B2</item>
+
+    </string-array>
 </resources>

@@ -9,13 +9,12 @@
     <string name="enable_app">Enable ColorzEh</string>
     <string name="action_about">About</string>
 
-    <string name="welcome">Welcome to ColorzEh!</string>
     <string name="whatiscolorz">What is ColorzEh?</string>
-    <string name="colorzis">ColorzEh is a custom lock screen attempting to overcome the security issue of people looking over your shoulder and knowing what your password is. It attempts to defeat this by implementing 3 patterns:</string>
+    <string name="colorzis">ColorzEh is a custom lock screen attempting to prevent onlookers from knowing your password. It achieves this by providing 3 possible unlock patterns:</string>
 
     <string name="sequencedef">A sequence of colors</string>
     <string name="locationdef">A sequence of locations on the grid</string>
-    <string name="quantitydef">A specified number of colors where order does not matter</string>
+    <string name="quantitydef">A quantity of colors (order does not matter)</string>
 
     <string name="sequence">Sequence of Colors</string>
     <string name="location">Sequence of Locations</string>
@@ -54,4 +53,13 @@
     <color name="White">#FFFFFF</color>
     <color name="Background">#000000</color>
 
+
+    <color name="red">#FF3333</color>
+    <color name="blue">#3333FF</color>
+    <color name="green">#66FF66</color>
+    <color name="yellow">#FFFF66</color>
+
+    <color name="orange">#FF9933</color>
+    <color name="purple">#9933FF</color>
+    <color name="pink">#FF66B2</color>
 </resources>

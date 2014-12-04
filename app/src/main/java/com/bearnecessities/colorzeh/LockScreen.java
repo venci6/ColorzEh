@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -12,6 +13,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
+
+import org.w3c.dom.Text;
 
 import java.util.Arrays;
 
@@ -29,23 +32,37 @@ public class LockScreen extends Activity implements View.OnClickListener {
     private final String TAG = LockScreen.class.getSimpleName();
 
     // create pattern class
-    Pattern pat;
+    Pattern pat = new Pattern(Pattern.ORDER, new String[] {"RGBYR" , "000102", "4110"}, 123L);
 
 
     private ImageButton tl, tm, tr, ml, mm, mr, bl, bm, br;
 
+
     SharedPreferences sharedpreferences;
-
-
+    public static final String MY_PREFERENCES = "MyPrefs";
+    public static final String pattern = "patternKey";
+    public static final String pass = "passwordKey";
+    int c1, c2, c3, c4;
+    String[] colors;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lock_screen);
 
-        sharedpreferences = getSharedPreferences(Welcome.MY_PREFERENCES, Context.MODE_PRIVATE);
+        sharedpreferences = getSharedPreferences(MY_PREFERENCES, Context.MODE_PRIVATE);
+        colors = getResources().getStringArray(R.array.color_values_array);
 
-        getPassword();
+        c1 = sharedpreferences.getInt("COLOR_1", 0);
+        c2 = sharedpreferences.getInt("COLOR_2", 1);
+        c3 = sharedpreferences.getInt("COLOR_3", 2);
+        c4 = sharedpreferences.getInt("COLOR_4", 3);
+
+        boolean hasPassword = getPassword();
+        if(!hasPassword) {
+            TextView welcome = (TextView) findViewById(R.id.tv_welcome);
+            welcome.setVisibility(View.VISIBLE);
+        }
 
         initializeButtons();
         updateColorGrid();
@@ -59,14 +76,21 @@ public class LockScreen extends Activity implements View.OnClickListener {
         updateColorGrid();
     }
 
-    private void getPassword() {
-        String pwdMode = sharedpreferences.getString(Welcome.pattern, "");
-        String pw = sharedpreferences.getString(Welcome.pass, "");
-        String[] pwSplit = pw.split("/");
+    private boolean getPassword() {
+        String pwdMode = sharedpreferences.getString(pattern, "");
+        String pw = sharedpreferences.getString(pass, "");
 
-        Log.v(TAG, "mode " + pwdMode + " password " + Arrays.toString(pwSplit));
+        if(pw.equals("")&& pwdMode.equals("")) {
+            return false;
+        } else {
+            String[] pwSplit = pw.split("/");
 
-        pat = new Pattern(pwdMode, pwSplit, System.currentTimeMillis());
+            Log.v(TAG, "mode " + pwdMode + " password " + Arrays.toString(pwSplit));
+
+            pat = new Pattern(pwdMode, pwSplit, System.currentTimeMillis());
+            return true;
+        }
+
     }
 
     @Override
@@ -163,13 +187,13 @@ public class LockScreen extends Activity implements View.OnClickListener {
 
     private void setBtnColor(ImageButton btn, String color ) {
         if(color.equals("RED")) {
-            btn.setBackgroundColor(getResources().getColor(R.color.Red));
+            btn.setBackgroundColor(Color.parseColor(colors[c1]));
         } else if(color.equals("BLUE")) {
-            btn.setBackgroundColor(getResources().getColor(R.color.Blue));
+            btn.setBackgroundColor(Color.parseColor(colors[c2]));
         } else if(color.equals("GREEN")) {
-            btn.setBackgroundColor(getResources().getColor(R.color.Green));
+            btn.setBackgroundColor(Color.parseColor(colors[c3]));
         } else if(color.equals("YELLOW")) {
-            btn.setBackgroundColor(getResources().getColor(R.color.Yellow));
+            btn.setBackgroundColor(Color.parseColor(colors[c4]));
         } else {
             btn.setBackgroundColor(getResources().getColor(R.color.White));
         }
