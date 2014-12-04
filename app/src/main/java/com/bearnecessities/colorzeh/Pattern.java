@@ -17,11 +17,11 @@ import java.util.Random;
  *      = QUANTITY_ORDER            (need testing)
  *      = QUANTITY_POSITION         (need testing)
  *      = ORDER_POSITION_QUANTITY   (need testing)
- *      = ORDER_QUANTITY_POSITION   ()
- *      = POSITION_ORDER_QUANTITY   ()
- *      = POSITION_QUANTITY_ORDER   ()
- *      = QUANTITY_ORDER_POSITION   ()
- *      = QUANTITY_POSITION_ORDER   ()
+ *      = ORDER_QUANTITY_POSITION   (need testing)
+ *      = POSITION_ORDER_QUANTITY   (need testing)
+ *      = POSITION_QUANTITY_ORDER   (need testing)
+ *      = QUANTITY_ORDER_POSITION   (need testing)
+ *      = QUANTITY_POSITION_ORDER   (need testing)
  *  - Review documentation and spelling.
  */
 public class Pattern {
@@ -252,23 +252,68 @@ public class Pattern {
 
         } else if (this.whichPattern.equals(Pattern.ORDER_QUANTITY_POSITION)) {
 
-            unlocked = true;
+            if (this.orderPosition >= this.orderPattern.length()) {
+                if (checkQuantities()) {
+                    updatePositionPattern(x, y);
+                    unlocked = this.positionPosition >= this.positionPattern.length();
+                } else {
+                    updateQuantityPattern(getCAtPosition(x,y));
+                }
+            } else {
+                updateOrderPattern(getCAtPosition(x,y));
+            }
 
         } else if (this.whichPattern.equals(Pattern.POSITION_ORDER_QUANTITY)) {
 
-            unlocked = true;
+            if (this.positionPosition >= this.positionPattern.length()) {
+                if (this.orderPosition >= this.orderPattern.length()) {
+                    updateQuantityPattern(getCAtPosition(x,y));
+                    unlocked = checkQuantities();
+                } else {
+                    updateOrderPattern(getCAtPosition(x,y));
+                }
+            } else {
+                updatePositionPattern(x, y);
+            }
 
         } else if (this.whichPattern.equals(Pattern.POSITION_QUANTITY_ORDER)) {
 
-            unlocked = true;
+            if (this.positionPosition >= this.positionPattern.length()) {
+                if (checkQuantities()) {
+                    updateOrderPattern(getCAtPosition(x,y));
+                    unlocked = this.orderPosition >= this.orderPattern.length();
+                } else {
+                    updateQuantityPattern(getCAtPosition(x,y));
+                }
+            } else {
+                updatePositionPattern(x, y);
+            }
 
         } else if (this.whichPattern.equals(Pattern.QUANTITY_ORDER_POSITION)) {
 
-            unlocked = true;
+            if (checkQuantities()) {
+                if (this.orderPosition >= this.orderPattern.length()) {
+                    updateOrderPattern(getCAtPosition(x,y));
+                    unlocked = this.positionPosition >= this.positionPattern.length();
+                } else {
+                    updatePositionPattern(x, y);
+                }
+            } else {
+                updateQuantityPattern(getCAtPosition(x,y));
+            }
 
         } else if (this.whichPattern.equals(Pattern.QUANTITY_POSITION_ORDER)) {
 
-            unlocked = true;
+            if (checkQuantities()) {
+                if (this.positionPosition >= this.positionPattern.length()) {
+                    updateOrderPattern(getCAtPosition(x,y));
+                    unlocked = this.orderPosition >= this.orderPattern.length();
+                } else {
+                    updatePositionPattern(x, y);
+                }
+            } else {
+                updateQuantityPattern(getCAtPosition(x,y));
+            }
 
         }
         
