@@ -11,18 +11,17 @@ import java.util.Random;
  *      = POSITION                  (fully tested)
  *      = QUANTITY                  (fully tested)
  *      = ORDER_POSITION            (need testing)
- *      = ORDER_QUANTITY            (need testing)
+ *      = ORDER_QUANTITY            (fully tested)
  *      = POSITION_ORDER            (need testing)
  *      = POSITION_QUANTITY         (need testing)
  *      = QUANTITY_ORDER            (need testing)
  *      = QUANTITY_POSITION         (need testing)
- *      = ORDER_POSITION_QUANTITY   (need testing)
+ *      = ORDER_POSITION_QUANTITY   (fully tested)
  *      = ORDER_QUANTITY_POSITION   (need testing)
  *      = POSITION_ORDER_QUANTITY   (need testing)
  *      = POSITION_QUANTITY_ORDER   (need testing)
  *      = QUANTITY_ORDER_POSITION   (need testing)
  *      = QUANTITY_POSITION_ORDER   (need testing)
- *  - Review documentation and spelling.
  */
 public class Pattern {
 
@@ -154,6 +153,12 @@ public class Pattern {
     public String getCAtPosition (int x, int y) {
         return getColorAtPosition(x, y).substring(0,1);
     }
+
+    /**
+     * Returns the size of one edge of the grid.
+     * @return the size of one edge
+     */
+    public int getGridSize () {return this.n;}
 
     /**
      * Updates the necessary pattern tracking based on the input give.
