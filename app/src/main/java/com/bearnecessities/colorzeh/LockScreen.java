@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import java.security.Provider;
 import java.util.Arrays;
 
  /*
@@ -24,6 +25,8 @@ import java.util.Arrays;
          n-1
 
  */
+
+
 
 public class LockScreen extends Activity implements View.OnClickListener {
 
@@ -43,6 +46,9 @@ public class LockScreen extends Activity implements View.OnClickListener {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lock_screen);
+
+        //start lock service
+        startService(new Intent(getBaseContext(), LockService.class));
 
         sharedpreferences = getSharedPreferences(Welcome.MY_PREFERENCES, Context.MODE_PRIVATE);
 
