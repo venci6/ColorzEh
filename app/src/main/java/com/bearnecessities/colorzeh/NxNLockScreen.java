@@ -7,6 +7,7 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -32,8 +33,6 @@ public class NxNLockScreen extends Activity {
     Pattern pat = new Pattern(Pattern.ORDER, n, new String[] {"RGBYR" , "000102", "4110"}, 123L);
 
 
-    private ImageButton tl, tm, tr, ml, mm, mr, bl, bm, br;
-
     SharedPreferences sharedpreferences;
     public static final String MY_PREFERENCES = "MyPrefs";
     public static final String pattern = "patternKey";
@@ -58,11 +57,9 @@ public class NxNLockScreen extends Activity {
 
         colorGrid = (GridView) findViewById(R.id.nxnGrid);
 
-
-
         getPassword();
-        colorGrid.setNumColumns(n);
-        generateArrayForGV();
+
+
         refreshGrid();
 
         colorGrid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -94,6 +91,10 @@ public class NxNLockScreen extends Activity {
     }
 
     private void refreshGrid() {
+
+        colorGrid.setNumColumns(n);
+        generateArrayForGV();
+
         adapter = new ColorGridViewAdapter(this, nums, pat);
         colorGrid.setAdapter(adapter);
     }
@@ -116,8 +117,6 @@ public class NxNLockScreen extends Activity {
 
         updateColors();
         getPassword();
-        colorGrid.setNumColumns(n);
-        generateArrayForGV();
         refreshGrid();
     }
 
@@ -135,10 +134,10 @@ public class NxNLockScreen extends Activity {
         String[] pwSplit = pw.split("/");
 
         Log.v(TAG, "mode " + pwdMode + " password " + Arrays.toString(pwSplit));
+        n = sharedpreferences.getInt("GRID_SIZE",3);
 
         pat = new Pattern(pwdMode,n, pwSplit, System.currentTimeMillis());
 
-        n = sharedpreferences.getInt("GRID_SIZE",3);
 
 
 
@@ -172,5 +171,21 @@ public class NxNLockScreen extends Activity {
                 break;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        boolean res = super.onKeyDown(keyCode, event);
+
+        switch (keyCode) {
+
+
+                return false;
+
+            case KeyEvent.KEYCODE_BACK:
+                return false;
+            default:
+        }
+        return res;
     }
 }

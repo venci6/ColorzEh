@@ -5,19 +5,20 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center">
+    android:gravity="center"
+    android:background="@color/Background">
 
     <LinearLayout
-        android:layout_width="250dp"
-        android:layout_height="250dp">
-    <GridView
-        android:id="@+id/nxnGrid"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:horizontalSpacing="1dp"
-        android:verticalSpacing="1dp"
-        android:numColumns="4"
-        android:stretchMode="columnWidth"/>
+        android:layout_width="300dp"
+        android:layout_height="300dp">
+        <GridView
+            android:id="@+id/nxnGrid"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:horizontalSpacing="1dp"
+            android:verticalSpacing="1dp"
+            android:numColumns="4"
+            android:stretchMode="columnWidth"/>
     </LinearLayout>
 
 </LinearLayout>

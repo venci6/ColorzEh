@@ -56,6 +56,18 @@
                 android:value=".LockScreen"/>
         </activity>
 
+        <activity
+            android:name=".LSLauncher"
+            android:label="Launcher"
+            android:launchMode="singleTask"
+            >
+            <intent-filter>
+            <action android:name="android.intent.action.MAIN" />
+            <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.HOME" />
+            </intent-filter>
+        </activity>
+
         <service
         android:exported="false"
         android:isolatedProcess="false"

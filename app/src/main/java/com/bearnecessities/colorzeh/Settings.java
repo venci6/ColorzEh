@@ -31,21 +31,25 @@ public class Settings extends FragmentActivity implements View.OnClickListener{
     Spinner NXNspinner;
     int n;
     static boolean needReset = false;
+    SharedPreferences sharedPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.settings);
 
+        sharedPreferences = getSharedPreferences(LockScreen.MY_PREFERENCES, Context.MODE_PRIVATE);
+
         setSize = (Button) findViewById(R.id.set_grid_size);
         setSize.setOnClickListener(this);
 
         NXNspinner = (Spinner) findViewById(R.id.nxnPicker);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
-                R.array.NXN_array, android.R.layout.simple_spinner_item);
+                R.array.NXN_array, R.layout.custom_spinner);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         NXNspinner.setAdapter(adapter);
-        NXNspinner.setSelection(1);
+        n = sharedPreferences.getInt("GRID_SIZE", 0);
+        NXNspinner.setSelection(adapter.getPosition(""+n));
         NXNspinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
@@ -180,11 +184,14 @@ public class Settings extends FragmentActivity implements View.OnClickListener{
                 break;
 
             case R.id.set_grid_size:
-                SharedPreferences sharedPreferences = getSharedPreferences(LockScreen.MY_PREFERENCES, Context.MODE_PRIVATE);
+
                 SharedPreferences.Editor editor = sharedPreferences.edit();
 
                 editor.putInt("GRID_SIZE", n);
                 editor.commit();
+
+                Toast.makeText(this, "Grid size changed", Toast.LENGTH_SHORT).show();
+                needReset = true;
                 break;
             case R.id.confirm_button:
                 this.finish();
