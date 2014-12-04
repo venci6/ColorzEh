@@ -1,19 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
+    android:layout_width="fill_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:gravity="center_horizontal"
+    android:background="@color/Background">
 
     <Button
         android:id="@+id/set_pwd"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/set_password"/>
+        android:text="@string/set_password"
+        android:minWidth="175dp"
+        android:textColor="@color/White" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/set_colors"/>
+        android:text="@string/set_colors"
+        android:textSize="@dimen/font_size_all"
+        android:textColor="@color/White" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -50,13 +56,17 @@
         android:id="@+id/set_colors"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/set_colors"/>
+        android:text="@string/set_colors"
+        android:minWidth="175dp"
+        android:textColor="@color/White" />
 
 
     <CheckBox
         android:id="@+id/enable_colorzeh"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/enable_app"/>
+        android:text="@string/enable_app"
+        android:textSize="@dimen/font_size_all"
+        android:textColor="@color/White" />
 
 </LinearLayout>

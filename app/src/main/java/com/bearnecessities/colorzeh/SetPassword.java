@@ -85,7 +85,7 @@ public class SetPassword extends Activity implements View.OnClickListener{
 
 
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
-                R.array.patterns_array, android.R.layout.simple_spinner_item);
+                R.array.patterns_array, R.layout.custom_spinner);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         seqOrder.setAdapter(adapter);

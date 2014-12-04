@@ -1,5 +1,6 @@
 package com.bearnecessities.colorzeh;
 
+import android.graphics.ColorMatrix;
 import android.support.v4.app.Fragment;
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -35,7 +36,7 @@ public class ColorSpinnerFragment extends Fragment {
         categorySpinner = (Spinner) v.findViewById(R.id.colorsSpinner);
 
         // Create an ArrayAdapter using the string array and a default spinner layout
-        adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, colors_array);
+        adapter = new ArrayAdapter<String>(getActivity(), R.layout.custom_spinner, colors_array);
 
         /*
         adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, colors_array) {
@@ -84,8 +85,11 @@ public class ColorSpinnerFragment extends Fragment {
                     // when a category is selected, display its color in the spinner
                 Log.v("ColorSpinnerFragment", colors_array[pos] + "=" + color_values_array[pos]);
 
-                ((TextView) parent.getChildAt(0)).setBackgroundColor(Color.parseColor(color_values_array[pos]));
+                int c = Color.parseColor(color_values_array[pos]);
 
+                ((TextView) parent.getChildAt(0)).setBackgroundColor(c);
+
+                ((TextView) parent.getChildAt(0)).setTextColor(c+ 10000);
             }
 
             @Override
@@ -96,6 +100,11 @@ public class ColorSpinnerFragment extends Fragment {
                 //categorySelected = "Default";
             }
         });
+
+
+
+
+
         return v;
     }
 
