@@ -169,8 +169,6 @@ public class Pattern {
     public boolean input (int x, int y) {
 
         boolean unlocked = false;
-        boolean subUnlocked = false;
-        boolean subUnlocked2 = false;
 
 
         if (this.whichPattern.equals(Pattern.ORDER)) {
