@@ -2,6 +2,7 @@ package com.bearnecessities.colorzeh;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -345,7 +346,9 @@ public class SetPassword extends Activity implements View.OnClickListener{
                 case R.id.finish:
                     setPasswords();
                     Settings.needReset = false;
-                    finish();
+                    //start lock service
+                    startService(new Intent(getBaseContext(), LockService.class));
+                    this.finish();
                     break;
             }
         }

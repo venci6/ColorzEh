@@ -21,13 +21,13 @@ public class LockScreenReceiver extends BroadcastReceiver{
 
             context.startActivity(intent11);
 
-        } else if (intent.getAction().equals(Intent.ACTION_SCREEN_ON)) {
+        } /*else if (intent.getAction().equals(Intent.ACTION_SCREEN_ON)) {
 
             wasScreenOn = true;
             Intent intent11 = new Intent(context, LockScreen.class);
             intent11.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
-        } else if (intent.getAction().equals(Intent.ACTION_BOOT_COMPLETED)) {
+        } */ else if (intent.getAction().equals(Intent.ACTION_BOOT_COMPLETED)) {
 
             Intent intent11 = new Intent(context, LockScreen.class);
 

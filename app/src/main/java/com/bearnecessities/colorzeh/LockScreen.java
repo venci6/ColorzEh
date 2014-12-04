@@ -56,8 +56,6 @@ public class LockScreen extends Activity implements View.OnClickListener {
         //start lock service
         startService(new Intent(getBaseContext(), LockService.class));
 
-
-
         sharedpreferences = getSharedPreferences(MY_PREFERENCES, Context.MODE_PRIVATE);
         colors = getResources().getStringArray(R.array.color_values_array);
 
@@ -237,7 +235,7 @@ public class LockScreen extends Activity implements View.OnClickListener {
                 startActivity(settings);
                 break;
             case R.id.action_about:
-                Intent about = new Intent(LockScreen.this, Welcome.class);
+                Intent about = new Intent(LockScreen.this, About.class);
                 startActivity(about);
                 break;
         }

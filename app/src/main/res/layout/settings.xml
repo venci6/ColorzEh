@@ -60,13 +60,13 @@
         android:minWidth="175dp"
         android:textColor="@color/White" />
 
-
-    <CheckBox
-        android:id="@+id/enable_colorzeh"
+    <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/enable_app"
-        android:textSize="@dimen/font_size_all"
-        android:textColor="@color/White" />
+        android:text="Confirm"
+        android:id="@+id/confirm_button"
+        android:textColor="@color/White"
+        android:minWidth="175dp" />
+
 
 </LinearLayout>
