@@ -52,16 +52,14 @@ public class LockScreen extends Activity implements View.OnClickListener {
         sharedpreferences = getSharedPreferences(MY_PREFERENCES, Context.MODE_PRIVATE);
         colors = getResources().getStringArray(R.array.color_values_array);
 
+        /*
         c1 = sharedpreferences.getInt("COLOR_1", 0);
         c2 = sharedpreferences.getInt("COLOR_2", 1);
         c3 = sharedpreferences.getInt("COLOR_3", 2);
         c4 = sharedpreferences.getInt("COLOR_4", 3);
+        */
 
-        boolean hasPassword = getPassword();
-        if(!hasPassword) {
-            TextView welcome = (TextView) findViewById(R.id.tv_welcome);
-            welcome.setVisibility(View.VISIBLE);
-        }
+        getPassword();
 
         initializeButtons();
         updateColorGrid();
@@ -71,24 +69,29 @@ public class LockScreen extends Activity implements View.OnClickListener {
     public void onResume() {
         super.onResume();
 
+        updateColors();
         getPassword();
         updateColorGrid();
     }
 
-    private boolean getPassword() {
+    private void updateColors() {
+        c1 = sharedpreferences.getInt("COLOR_1", 0);
+        c2 = sharedpreferences.getInt("COLOR_2", 1);
+        c3 = sharedpreferences.getInt("COLOR_3", 2);
+        c4 = sharedpreferences.getInt("COLOR_4", 3);
+    }
+
+    private void getPassword() {
         String pwdMode = sharedpreferences.getString(pattern, "");
         String pw = sharedpreferences.getString(pass, "");
 
-        if(pw.equals("")&& pwdMode.equals("")) {
-            return false;
-        } else {
-            String[] pwSplit = pw.split("/");
+        String[] pwSplit = pw.split("/");
 
-            Log.v(TAG, "mode " + pwdMode + " password " + Arrays.toString(pwSplit));
+        Log.v(TAG, "mode " + pwdMode + " password " + Arrays.toString(pwSplit));
 
-            pat = new Pattern(pwdMode,3, pwSplit, System.currentTimeMillis());
-            return true;
-        }
+        pat = new Pattern(pwdMode,3, pwSplit, System.currentTimeMillis());
+
+
 
     }
 

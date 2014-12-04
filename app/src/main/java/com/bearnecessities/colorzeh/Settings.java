@@ -26,6 +26,7 @@ public class Settings extends FragmentActivity implements View.OnClickListener{
     Button setPassword, setColors;
     int color1, color2, color3, color4;
     ColorSpinnerFragment csf1, csf2, csf3, csf4;
+    static boolean needReset = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -118,6 +119,14 @@ public class Settings extends FragmentActivity implements View.OnClickListener{
     }
 
     @Override
+    public void onBackPressed() {
+        if(needReset) {
+            Toast.makeText(this, "Please change your password!", Toast.LENGTH_LONG).show();
+        } else {
+            super.onBackPressed();
+        }
+    }
+    @Override
     public void onClick(View v) {
         switch(v.getId()) {
             case R.id.set_pwd:
@@ -136,6 +145,7 @@ public class Settings extends FragmentActivity implements View.OnClickListener{
                     editor.commit();
 
                     Toast.makeText(this, "Colors successfuly changed!", Toast.LENGTH_SHORT).show();
+                    needReset = true;
                 } else {
                     Toast.makeText(this, "You cannot select a color more than once!", Toast.LENGTH_SHORT).show();
                 }

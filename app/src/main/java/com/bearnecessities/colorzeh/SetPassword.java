@@ -344,6 +344,7 @@ public class SetPassword extends Activity implements View.OnClickListener{
                     break;
                 case R.id.finish:
                     setPasswords();
+                    Settings.needReset = false;
                     finish();
                     break;
             }
