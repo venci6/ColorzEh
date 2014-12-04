@@ -39,8 +39,8 @@ public class LockScreen extends Activity implements View.OnClickListener {
     public static final String MY_PREFERENCES = "MyPrefs";
     public static final String pattern = "patternKey";
     public static final String pass = "passwordKey";
-    int c1, c2, c3, c4;
-    String[] colors;
+    public static int c1, c2, c3, c4;
+    public static String[] colors;
 
 
 

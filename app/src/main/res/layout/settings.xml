@@ -2,7 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:gravity="center">
 
     <Button
         android:id="@+id/set_pwd"
@@ -53,10 +54,21 @@
         android:text="@string/set_colors"/>
 
 
-    <CheckBox
-        android:id="@+id/enable_colorzeh"
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="NxN grid"/>
+
+    <Button
+        android:id="@+id/set_grid_size"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/enable_app"/>
+        android:text="Set size of grid"/>
+    <Spinner
+        android:id="@+id/nxnPicker"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        />
+
 
 </LinearLayout>

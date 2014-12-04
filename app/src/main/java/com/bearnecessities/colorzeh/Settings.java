@@ -7,6 +7,8 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
 import android.support.v4.app.FragmentManager;
@@ -23,15 +25,38 @@ import java.util.Set;
  * Created by Charlene on 11/26/2014.
  */
 public class Settings extends FragmentActivity implements View.OnClickListener{
-    Button setPassword, setColors;
+    Button setPassword, setColors, setSize;
     int color1, color2, color3, color4;
     ColorSpinnerFragment csf1, csf2, csf3, csf4;
+    Spinner NXNspinner;
+    int n;
     static boolean needReset = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.settings);
+
+        setSize = (Button) findViewById(R.id.set_grid_size);
+        setSize.setOnClickListener(this);
+
+        NXNspinner = (Spinner) findViewById(R.id.nxnPicker);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
+                R.array.NXN_array, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        NXNspinner.setAdapter(adapter);
+        NXNspinner.setSelection(1);
+        NXNspinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                n =  Integer.parseInt(adapterView.getItemAtPosition(i).toString());
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+                n = 3;
+            }
+        });
 
         setPassword = (Button) findViewById(R.id.set_pwd);
         setPassword.setOnClickListener(this);
@@ -149,6 +174,14 @@ public class Settings extends FragmentActivity implements View.OnClickListener{
                 } else {
                     Toast.makeText(this, "You cannot select a color more than once!", Toast.LENGTH_SHORT).show();
                 }
+                break;
+
+            case R.id.set_grid_size:
+                SharedPreferences sharedPreferences = getSharedPreferences(LockScreen.MY_PREFERENCES, Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+
+                editor.putInt("GRID_SIZE", n);
+                editor.commit();
                 break;
         }
     }
