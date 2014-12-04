@@ -14,6 +14,7 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import java.security.Provider;
 import java.util.Arrays;
 
  /*
@@ -24,6 +25,8 @@ import java.util.Arrays;
          2   |_|_|_|
 
  */
+
+
 
 public class LockScreen extends Activity implements View.OnClickListener {
 
@@ -49,15 +52,13 @@ public class LockScreen extends Activity implements View.OnClickListener {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lock_screen);
 
+
+        //start lock service
+        startService(new Intent(getBaseContext(), LockService.class));
+
         sharedpreferences = getSharedPreferences(MY_PREFERENCES, Context.MODE_PRIVATE);
         colors = getResources().getStringArray(R.array.color_values_array);
 
-        /*
-        c1 = sharedpreferences.getInt("COLOR_1", 0);
-        c2 = sharedpreferences.getInt("COLOR_2", 1);
-        c3 = sharedpreferences.getInt("COLOR_3", 2);
-        c4 = sharedpreferences.getInt("COLOR_4", 3);
-        */
 
         getPassword();
 
@@ -234,7 +235,7 @@ public class LockScreen extends Activity implements View.OnClickListener {
                 startActivity(settings);
                 break;
             case R.id.action_about:
-                Intent about = new Intent(LockScreen.this, Welcome.class);
+                Intent about = new Intent(LockScreen.this, About.class);
                 startActivity(about);
                 break;
         }

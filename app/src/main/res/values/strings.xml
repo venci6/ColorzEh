@@ -32,6 +32,7 @@
     <string name="setPasswordText">"To set a password, click the checkbox of the pattern and press the \'Set\' button. You can then input your password in the grid at the bottom of the screen. Click \'Finish\' to finish your password. The number on the left indicates the order you want the pattern to be, if you choose multiple patterns to be your password"
     </string>
 
+    <string name="aboutpage">"We are real cool, guys! We aren't very Canadian eh? But we try cause we love bears."</string>
 
 
     <string name="TLBtn">Top Left Button</string>
@@ -62,4 +63,5 @@
     <color name="orange">#FF9933</color>
     <color name="purple">#9933FF</color>
     <color name="pink">#FF66B2</color>
+
 </resources>

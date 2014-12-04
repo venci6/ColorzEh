@@ -25,7 +25,7 @@ import java.util.Set;
  * Created by Charlene on 11/26/2014.
  */
 public class Settings extends FragmentActivity implements View.OnClickListener{
-    Button setPassword, setColors, setSize;
+    Button setPassword, setColors, setSize, confirm;
     int color1, color2, color3, color4;
     ColorSpinnerFragment csf1, csf2, csf3, csf4;
     Spinner NXNspinner;
@@ -63,6 +63,9 @@ public class Settings extends FragmentActivity implements View.OnClickListener{
 
         setColors = (Button) findViewById(R.id.set_colors);
         setColors.setOnClickListener(this);
+
+        confirm = (Button) findViewById(R.id.confirm_button);
+        confirm.setOnClickListener(this);
 
         // Spinner 1
         if(findViewById(R.id.colorSpinner1)!=null) {
@@ -182,6 +185,9 @@ public class Settings extends FragmentActivity implements View.OnClickListener{
 
                 editor.putInt("GRID_SIZE", n);
                 editor.commit();
+                break;
+            case R.id.confirm_button:
+                this.finish();
                 break;
         }
     }

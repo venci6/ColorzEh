@@ -4,17 +4,24 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:gravity="center">
+    android:orientation="vertical"
+    android:gravity="center_horizontal"
+    android:background="@color/Background">
 
     <Button
         android:id="@+id/set_pwd"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/set_password"/>
+        android:text="@string/set_password"
+        android:minWidth="175dp"
+        android:textColor="@color/White" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/set_colors"/>
+        android:text="@string/set_colors"
+        android:textSize="@dimen/font_size_all"
+        android:textColor="@color/White" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -51,14 +58,16 @@
         android:id="@+id/set_colors"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/set_colors"/>
+        android:text="@string/set_colors"
+        android:minWidth="175dp"
+        android:textColor="@color/White" />
 
+    
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="NxN grid"/>
-
     <Button
         android:id="@+id/set_grid_size"
         android:layout_width="wrap_content"
@@ -69,6 +78,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Confirm"
+        android:id="@+id/confirm_button"
+        android:textColor="@color/White"
+        android:minWidth="175dp" />
 
 
 </LinearLayout>
