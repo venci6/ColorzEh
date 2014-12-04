@@ -3,6 +3,7 @@ package com.bearnecessities.colorzeh;
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -55,6 +56,10 @@ public class SetPassword extends Activity implements View.OnClickListener{
     // for pattern combinations
     int numModes = 0;
 
+    int c1, c2, c3, c4;
+    String[] colors;
+
+    SharedPreferences sharedPreferences;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,6 +70,15 @@ public class SetPassword extends Activity implements View.OnClickListener{
     }
 
     private void initializeViews() {
+
+        sharedPreferences = getSharedPreferences(LockScreen.MY_PREFERENCES, Context.MODE_PRIVATE);
+        colors = getResources().getStringArray(R.array.color_values_array);
+
+        c1 = sharedPreferences.getInt("COLOR_1", 0);
+        c2 = sharedPreferences.getInt("COLOR_2", 1);
+        c3 = sharedPreferences.getInt("COLOR_3", 2);
+        c4 = sharedPreferences.getInt("COLOR_4", 3);
+
         seqOrder = (Spinner) findViewById(R.id.sequenceOrder);
         locOrder = (Spinner) findViewById(R.id.locationOrder);
         quantOrder = (Spinner) findViewById(R.id.quantityOrder);
@@ -330,6 +344,7 @@ public class SetPassword extends Activity implements View.OnClickListener{
                     break;
                 case R.id.finish:
                     setPasswords();
+                    Settings.needReset = false;
                     finish();
                     break;
             }
@@ -478,8 +493,8 @@ public class SetPassword extends Activity implements View.OnClickListener{
         return bool;
     }
     private void setPasswords() {
-        SharedPreferences sharedpreferences = getSharedPreferences(Welcome.MY_PREFERENCES, Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedpreferences.edit();
+
+        SharedPreferences.Editor editor = sharedPreferences.edit();
 
         editor.putString("patternKey", entireMode);
         editor.putString("passwordKey", entirePassword[0] +"/"+ entirePassword[1] +"/"+ entirePassword[2]);
@@ -536,13 +551,13 @@ public class SetPassword extends Activity implements View.OnClickListener{
     private void setBtnColor(ImageButton btn, String color ) {
 
         if(color.equals("RED")) {
-            btn.setBackgroundColor(getResources().getColor(R.color.Red));
+            btn.setBackgroundColor(Color.parseColor(colors[c1]));
         } else if(color.equals("BLUE")) {
-            btn.setBackgroundColor(getResources().getColor(R.color.Blue));
+            btn.setBackgroundColor(Color.parseColor(colors[c2]));
         } else if(color.equals("GREEN")) {
-            btn.setBackgroundColor(getResources().getColor(R.color.Green));
+            btn.setBackgroundColor(Color.parseColor(colors[c3]));
         } else if(color.equals("YELLOW")) {
-            btn.setBackgroundColor(getResources().getColor(R.color.Yellow));
+            btn.setBackgroundColor(Color.parseColor(colors[c4]));
         } else {
             btn.setBackgroundColor(getResources().getColor(R.color.White));
         }

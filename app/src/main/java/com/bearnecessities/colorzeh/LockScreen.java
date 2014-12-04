@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -17,12 +18,11 @@ import java.security.Provider;
 import java.util.Arrays;
 
  /*
-              0 1 2 n-1
+              0 1 2
               _ _ _
          0   |_|_|_|
          1   |_|_|_|
          2   |_|_|_|
-         n-1
 
  */
 
@@ -33,12 +33,17 @@ public class LockScreen extends Activity implements View.OnClickListener {
     private final String TAG = LockScreen.class.getSimpleName();
 
     // create pattern class
-    Pattern pat;
+    Pattern pat = new Pattern(Pattern.ORDER, 3, new String[] {"RGBYR" , "000102", "4110"}, 123L);
 
 
     private ImageButton tl, tm, tr, ml, mm, mr, bl, bm, br;
 
     SharedPreferences sharedpreferences;
+    public static final String MY_PREFERENCES = "MyPrefs";
+    public static final String pattern = "patternKey";
+    public static final String pass = "passwordKey";
+    int c1, c2, c3, c4;
+    String[] colors;
 
 
 
@@ -47,10 +52,22 @@ public class LockScreen extends Activity implements View.OnClickListener {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lock_screen);
 
+<<<<<<< HEAD
         //start lock service
         startService(new Intent(getBaseContext(), LockService.class));
 
         sharedpreferences = getSharedPreferences(Welcome.MY_PREFERENCES, Context.MODE_PRIVATE);
+=======
+        sharedpreferences = getSharedPreferences(MY_PREFERENCES, Context.MODE_PRIVATE);
+        colors = getResources().getStringArray(R.array.color_values_array);
+
+        /*
+        c1 = sharedpreferences.getInt("COLOR_1", 0);
+        c2 = sharedpreferences.getInt("COLOR_2", 1);
+        c3 = sharedpreferences.getInt("COLOR_3", 2);
+        c4 = sharedpreferences.getInt("COLOR_4", 3);
+        */
+>>>>>>> origin/master
 
         getPassword();
 
@@ -62,18 +79,30 @@ public class LockScreen extends Activity implements View.OnClickListener {
     public void onResume() {
         super.onResume();
 
+        updateColors();
         getPassword();
         updateColorGrid();
     }
 
+    private void updateColors() {
+        c1 = sharedpreferences.getInt("COLOR_1", 0);
+        c2 = sharedpreferences.getInt("COLOR_2", 1);
+        c3 = sharedpreferences.getInt("COLOR_3", 2);
+        c4 = sharedpreferences.getInt("COLOR_4", 3);
+    }
+
     private void getPassword() {
-        String pwdMode = sharedpreferences.getString(Welcome.pattern, "");
-        String pw = sharedpreferences.getString(Welcome.pass, "");
+        String pwdMode = sharedpreferences.getString(pattern, "");
+        String pw = sharedpreferences.getString(pass, "");
+
         String[] pwSplit = pw.split("/");
 
         Log.v(TAG, "mode " + pwdMode + " password " + Arrays.toString(pwSplit));
 
-        pat = new Pattern(pwdMode, 3, pwSplit, System.currentTimeMillis());
+        pat = new Pattern(pwdMode,3, pwSplit, System.currentTimeMillis());
+
+
+
     }
 
     @Override
@@ -170,13 +199,13 @@ public class LockScreen extends Activity implements View.OnClickListener {
 
     private void setBtnColor(ImageButton btn, String color ) {
         if(color.equals("RED")) {
-            btn.setBackgroundColor(getResources().getColor(R.color.Red));
+            btn.setBackgroundColor(Color.parseColor(colors[c1]));
         } else if(color.equals("BLUE")) {
-            btn.setBackgroundColor(getResources().getColor(R.color.Blue));
+            btn.setBackgroundColor(Color.parseColor(colors[c2]));
         } else if(color.equals("GREEN")) {
-            btn.setBackgroundColor(getResources().getColor(R.color.Green));
+            btn.setBackgroundColor(Color.parseColor(colors[c3]));
         } else if(color.equals("YELLOW")) {
-            btn.setBackgroundColor(getResources().getColor(R.color.Yellow));
+            btn.setBackgroundColor(Color.parseColor(colors[c4]));
         } else {
             btn.setBackgroundColor(getResources().getColor(R.color.White));
         }

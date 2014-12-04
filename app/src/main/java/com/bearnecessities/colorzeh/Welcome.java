@@ -8,24 +8,22 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import java.util.concurrent.locks.Lock;
+
 /**
  * Created by Charlene on 11/24/2014.
  */
 public class Welcome extends Activity  {
     private Button settings;
-    SharedPreferences sharedpreferences;
-    public static final String MY_PREFERENCES = "MyPrefs";
-    public static final String pattern = "patternKey";
-    public static final String pass = "passwordKey";
+
+    SharedPreferences sharedPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // if already have a password set, go to the lockscreen
-        sharedpreferences = getSharedPreferences(MY_PREFERENCES, Context.MODE_PRIVATE);
-
-        if(sharedpreferences.contains(pattern) && sharedpreferences.contains(pass)) {
+        sharedPreferences = getSharedPreferences(LockScreen.MY_PREFERENCES, Context.MODE_PRIVATE);
+        if(sharedPreferences.contains(LockScreen.pattern) && sharedPreferences.contains(LockScreen.pass)) {
             Intent lockScreen = new Intent(Welcome.this, LockScreen.class);
             startActivity(lockScreen);
             finish();
@@ -42,12 +40,13 @@ public class Welcome extends Activity  {
                 }
             });
         }
+
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        if(sharedpreferences.contains(pattern) && sharedpreferences.contains(pass)) {
+        if(sharedPreferences.contains(LockScreen.pattern) && sharedPreferences.contains(LockScreen.pass)) {
             Intent lockScreen = new Intent(Welcome.this, LockScreen.class);
             startActivity(lockScreen);
             finish();
