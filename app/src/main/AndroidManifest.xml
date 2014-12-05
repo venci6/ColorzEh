@@ -46,6 +46,15 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".LockScreen"/>
         </activity>
+        <activity
+            android:name=".SetNxNPassword"
+            android:label="@string/set_password"
+            android:parentActivityName=".Welcome"
+            android:screenOrientation="portrait">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".LockScreen"/>
+        </activity>
 
         <activity
             android:name=".Settings"

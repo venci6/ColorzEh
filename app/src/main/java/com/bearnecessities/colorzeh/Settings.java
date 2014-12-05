@@ -162,7 +162,7 @@ public class Settings extends FragmentActivity implements View.OnClickListener{
     public void onClick(View v) {
         switch(v.getId()) {
             case R.id.set_pwd:
-                Intent setPwd = new Intent(Settings.this, SetPassword.class);
+                Intent setPwd = new Intent(Settings.this, SetNxNPassword.class);
                 startActivity(setPwd);
                 break;
             case R.id.set_colors:

@@ -53,8 +53,6 @@ public class NxNLockScreen extends Activity {
         sharedpreferences = getSharedPreferences(MY_PREFERENCES, Context.MODE_PRIVATE);
         colors = getResources().getStringArray(R.array.color_values_array);
 
-
-
         colorGrid = (GridView) findViewById(R.id.nxnGrid);
 
         getPassword();
@@ -86,8 +84,6 @@ public class NxNLockScreen extends Activity {
 
             }
         });
-        //initializeButtons();
-        //updateColorGrid();
     }
 
     private void refreshGrid() {
@@ -178,10 +174,6 @@ public class NxNLockScreen extends Activity {
         boolean res = super.onKeyDown(keyCode, event);
 
         switch (keyCode) {
-
-
-                return false;
-
             case KeyEvent.KEYCODE_BACK:
                 return false;
             default:
