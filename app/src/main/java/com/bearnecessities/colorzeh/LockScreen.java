@@ -35,7 +35,6 @@ public class LockScreen extends Activity implements View.OnClickListener {
     // create pattern class
     Pattern pat = new Pattern(Pattern.ORDER, 3, new String[] {"RGBYR" , "000102", "4110"}, 123L);
 
-
     private ImageButton tl, tm, tr, ml, mm, mr, bl, bm, br;
 
     SharedPreferences sharedpreferences;
@@ -91,9 +90,6 @@ public class LockScreen extends Activity implements View.OnClickListener {
         Log.v(TAG, "mode " + pwdMode + " password " + Arrays.toString(pwSplit));
 
         pat = new Pattern(pwdMode,3, pwSplit, System.currentTimeMillis());
-
-
-
     }
 
     @Override
@@ -218,16 +214,12 @@ public class LockScreen extends Activity implements View.OnClickListener {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.lock_screen, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.set_password.
         int id = item.getItemId();
         switch(id) {
             case R.id.action_settings:

@@ -1,16 +1,19 @@
 package com.bearnecessities.colorzeh;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.ImageButton;
@@ -32,7 +35,6 @@ public class NxNLockScreen extends Activity {
     // create pattern class
     Pattern pat = new Pattern(Pattern.ORDER, n, new String[] {"RGBYR" , "000102", "4110"}, 123L);
 
-
     SharedPreferences sharedpreferences;
     public static final String MY_PREFERENCES = "MyPrefs";
     public static final String pattern = "patternKey";
@@ -40,14 +42,22 @@ public class NxNLockScreen extends Activity {
     public static int c1, c2, c3, c4;
     public static String[] colors;
 
-
     List<ColorGridCell> nums;
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        if (Build.VERSION.SDK_INT < 16) {
+            getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                    WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        } else {
+            View decorView = getWindow().getDecorView();
+// Hide the status bar.
+            int uiOptions = View.SYSTEM_UI_FLAG_FULLSCREEN;
+            decorView.setSystemUiVisibility(uiOptions);
+        }
+
         setContentView(R.layout.lock_screen_nxn);
 
         sharedpreferences = getSharedPreferences(MY_PREFERENCES, Context.MODE_PRIVATE);
@@ -133,28 +143,16 @@ public class NxNLockScreen extends Activity {
         n = sharedpreferences.getInt("GRID_SIZE",3);
 
         pat = new Pattern(pwdMode,n, pwSplit, System.currentTimeMillis());
-
-
-
-
     }
-
-
-
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.lock_screen, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.set_password.
         int id = item.getItemId();
         switch(id) {
             case R.id.action_settings:
@@ -175,6 +173,8 @@ public class NxNLockScreen extends Activity {
 
         switch (keyCode) {
             case KeyEvent.KEYCODE_BACK:
+            case KeyEvent.KEYCODE_APP_SWITCH:
+                Log.v(TAG, "gu");
                 return false;
             default:
         }
