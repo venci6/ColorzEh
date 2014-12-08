@@ -50,7 +50,7 @@ public class ColorGridViewAdapter extends BaseAdapter {
             // inflate the GridView item layout
             LayoutInflater inflater = LayoutInflater.from(mContext);
 
-            convertView = inflater.inflate(android.R.layout.simple_list_item_1, parent, false);
+            convertView = inflater.inflate(R.layout.grid_cell, parent, false);
         }
 
         TextView view = (TextView) convertView.findViewById(android.R.id.text1);

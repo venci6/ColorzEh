@@ -39,6 +39,8 @@ public class ColorSpinnerFragment extends Fragment {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         categorySpinner.setAdapter(adapter);
 
+
+
         // To know which color spinner it is (1-4)
         Bundle bundle = this.getArguments();
         if(bundle!= null) {

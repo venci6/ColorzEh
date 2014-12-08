@@ -16,7 +16,7 @@ public class LockScreenReceiver extends BroadcastReceiver{
         if (intent.getAction().equals(Intent.ACTION_SCREEN_OFF)) {
 
             wasScreenOn = false;
-            Intent intent11 = new Intent(context, LockScreen.class);
+            Intent intent11 = new Intent(context, NxNLockScreen.class);
             intent11.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
             context.startActivity(intent11);
@@ -29,7 +29,7 @@ public class LockScreenReceiver extends BroadcastReceiver{
 
         } */ else if (intent.getAction().equals(Intent.ACTION_BOOT_COMPLETED)) {
 
-            Intent intent11 = new Intent(context, LockScreen.class);
+            Intent intent11 = new Intent(context, NxNLockScreen.class);
 
             intent11.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             context.startActivity(intent11);

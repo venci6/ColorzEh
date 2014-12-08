@@ -4,7 +4,8 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:gravity="center_horizontal"
-    android:background="@color/Background">
+    android:background="@color/Background"
+    android:padding="10dp">
 
     <Button
         android:id="@+id/set_pwd"
@@ -15,10 +16,11 @@
         android:textColor="@color/White" />
 
     <TextView
+        android:layout_marginTop="20dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/set_colors"
-        android:textSize="@dimen/font_size_all"
+        android:textSize="25sp"
         android:textColor="@color/White" />
 
     <LinearLayout
@@ -57,12 +59,15 @@
         android:layout_height="wrap_content"
         android:text="@string/set_colors"
         android:minWidth="175dp"
-        android:textColor="@color/White" />
+        android:textColor="@color/White"
+        />
 
     <TextView
+        android:layout_marginTop="20dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="@color/White"
+        android:textSize="25sp"
         android:text="@string/setNXN"/>
     <Spinner
         android:id="@+id/nxnPicker"
@@ -73,10 +78,13 @@
         android:id="@+id/set_grid_size"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/setNXN"
-        android:textColor="@color/White"/>
+        android:text="@string/setSize"
+        android:textColor="@color/White"
+
+        android:minWidth="175dp"/>
 
     <Button
+        android:layout_marginTop="20dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/confirm"

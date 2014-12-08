@@ -54,6 +54,7 @@ public class Settings extends FragmentActivity implements View.OnClickListener{
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 n =  Integer.parseInt(adapterView.getItemAtPosition(i).toString());
+                setSize.setEnabled(true);
             }
 
             @Override
@@ -176,7 +177,7 @@ public class Settings extends FragmentActivity implements View.OnClickListener{
                     editor.putInt("COLOR_4", color4);
                     editor.commit();
 
-                    Toast.makeText(this, "Colors successfuly changed!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, "Colors successfully changed! Please change your password", Toast.LENGTH_SHORT).show();
                     needReset = true;
                 } else {
                     Toast.makeText(this, "You cannot select a color more than once!", Toast.LENGTH_SHORT).show();
@@ -190,7 +191,7 @@ public class Settings extends FragmentActivity implements View.OnClickListener{
                 editor.putInt("GRID_SIZE", n);
                 editor.commit();
 
-                Toast.makeText(this, "Grid size changed", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Grid size changed. Please change your password.", Toast.LENGTH_SHORT).show();
                 needReset = true;
                 break;
             case R.id.confirm_button:

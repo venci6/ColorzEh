@@ -79,6 +79,7 @@ public class SetNxNPassword extends Activity implements View.OnClickListener{
 
         colorGrid = (GridView) findViewById(R.id.nxnGridSet);
         n = sharedPreferences.getInt("GRID_SIZE",3);
+
         pat =  new Pattern(Pattern.ORDER, n, password, System.currentTimeMillis());
 
         refreshGrid();
@@ -166,10 +167,10 @@ public class SetNxNPassword extends Activity implements View.OnClickListener{
     private void initializeViews() {
         // To choose what colors to display
         colors = getResources().getStringArray(R.array.color_values_array);
-        c1 = sharedPreferences.getInt("COLOR_1", 0);
-        c2 = sharedPreferences.getInt("COLOR_2", 1);
-        c3 = sharedPreferences.getInt("COLOR_3", 2);
-        c4 = sharedPreferences.getInt("COLOR_4", 3);
+        NxNLockScreen.c1 = sharedPreferences.getInt("COLOR_1", 0);
+        NxNLockScreen.c2 = sharedPreferences.getInt("COLOR_2", 1);
+        NxNLockScreen.c3 = sharedPreferences.getInt("COLOR_3", 2);
+        NxNLockScreen.c4 = sharedPreferences.getInt("COLOR_4", 3);
 
         // PATTERN ORDER SPINNERS
         seqOrder = (Spinner) findViewById(R.id.sequenceOrder);

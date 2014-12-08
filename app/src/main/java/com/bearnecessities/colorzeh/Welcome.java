@@ -22,7 +22,16 @@ public class Welcome extends Activity  {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+
+
         sharedPreferences = getSharedPreferences(NxNLockScreen.MY_PREFERENCES, Context.MODE_PRIVATE);
+
+        NxNLockScreen.c1 = sharedPreferences.getInt("COLOR_1", 0);
+        NxNLockScreen.c2 = sharedPreferences.getInt("COLOR_2", 1);
+        NxNLockScreen.c3 = sharedPreferences.getInt("COLOR_3", 2);
+        NxNLockScreen.c4 = sharedPreferences.getInt("COLOR_4", 3);
+
+        NxNLockScreen.colors = getResources().getStringArray(R.array.color_values_array);
         if(sharedPreferences.contains(NxNLockScreen.pattern) && sharedPreferences.contains(NxNLockScreen.pass)) {
             Intent lockScreen = new Intent(Welcome.this, NxNLockScreen.class);
             startActivity(lockScreen);
