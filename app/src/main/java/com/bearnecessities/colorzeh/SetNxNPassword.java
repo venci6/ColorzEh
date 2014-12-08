@@ -12,22 +12,24 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 /**
  * Created by Charlene on 11/20/2014.
  */
-public class SetPassword extends Activity implements View.OnClickListener{
+public class SetNxNPassword extends Activity implements View.OnClickListener{
 
-    private final String TAG = SetPassword.class.getSimpleName();
+    private final String TAG = SetNxNPassword.class.getSimpleName();
 
-    // a default password
     private static final String[] password = {"RGBYR" , "000102", "4110"};
-    Pattern pat = new Pattern(Pattern.ORDER, 3, password, System.currentTimeMillis());
+    Pattern pat;
 
     Spinner seqOrder, locOrder, quantOrder;
     int seqNum, locNum, quantNum;
@@ -36,7 +38,6 @@ public class SetPassword extends Activity implements View.OnClickListener{
     boolean seqChecked, locChecked, quantChecked;
 
     Button seqSet, locSet, quantSet, finish, verify;
-    private ImageButton tl, tm, tr, ml, mm, mr, bl, bm, br;
 
     String seqPwd ="", locPwd="";
     int[] quantPwd={0,0,0,0};
@@ -61,73 +62,163 @@ public class SetPassword extends Activity implements View.OnClickListener{
     int c1, c2, c3, c4;
     String[] colors;
 
+    GridView colorGrid;
+    ColorGridViewAdapter adapter;
+    List<ColorGridCell> nums;
+    int n;
+
     SharedPreferences sharedPreferences;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.set_password);
+        setContentView(R.layout.set_password_nxn);
+
+        sharedPreferences = getSharedPreferences(LockScreen.MY_PREFERENCES, Context.MODE_PRIVATE);
 
         initializeViews();
-        updateColorGrid();
+
+        colorGrid = (GridView) findViewById(R.id.nxnGridSet);
+        n = sharedPreferences.getInt("GRID_SIZE",3);
+
+        pat =  new Pattern(Pattern.ORDER, n, password, System.currentTimeMillis());
+
+        refreshGrid();
+
+        colorGrid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                String color;
+                int x = ((ColorGridCell)parent.getItemAtPosition(position)).x;
+                int y = ((ColorGridCell)parent.getItemAtPosition(position)).y;
+                color = pat.getCAtPosition(x,y);
+
+                Log.v(TAG, "(" + x + "," + y + ") = " + color);
+
+                switch(passwordMode) {
+                    case 0: // Setting Color Order Pattern
+                        seqPwd += "" + color;
+                        pat.updatePattern();
+                        refreshGrid();
+                        break;
+                    case 1: // Setting Location Order Pattern
+                        locPwd+= "" + x + "" + y;
+                        pat.updatePattern();
+                        refreshGrid();
+                        break;
+                    case 2: // Setting Quantity Order Pattern
+                        if (color.equalsIgnoreCase("R")) {
+                            quantPwd[0]++;
+                        } else if (color.equalsIgnoreCase("B")) {
+                            quantPwd[1]++;
+                        } else if (color.equalsIgnoreCase("Y")) {
+                            quantPwd[2]++;
+                        } else {
+                            quantPwd[3]++;
+                        }
+                        pat.updatePattern();
+                        refreshGrid();
+                        break;
+                    case 3: // verifying the password
+                        boolean unlock = pat.input(x, y);
+
+                        if (unlock) {
+                            Toast.makeText(getBaseContext(), "Password confirmed!", Toast.LENGTH_SHORT).show();
+
+                            finish.setEnabled(true);
+                            verify.setText("Verify");
+
+                            enableCheckedButtons();
+                            passwordMode = -1;
+                        } else {
+                            pat.updatePattern();
+                            refreshGrid();
+                        }
+                        break;
+
+                    default:
+                        Log.v(TAG, "Grid button pressed but not setting anything");
+                        break;
+                }
+            }
+        });
+    }
+
+    private void refreshGrid() {
+        colorGrid.setNumColumns(n);
+        generateArrayForGV();
+
+        adapter = new ColorGridViewAdapter(this, nums, pat);
+        colorGrid.setAdapter(adapter);
+    }
+
+    public void generateArrayForGV() {
+        ColorGridCell cell;
+        nums = new ArrayList<ColorGridCell>();
+
+        for(int i = 0; i<n; i++) {
+            for(int j = 0; j < n; j++) {
+                cell = new ColorGridCell(j, i);
+                nums.add(cell);
+            }
+
+        }
     }
 
     private void initializeViews() {
-
-        sharedPreferences = getSharedPreferences(LockScreen.MY_PREFERENCES, Context.MODE_PRIVATE);
+        // To choose what colors to display
         colors = getResources().getStringArray(R.array.color_values_array);
+        NxNLockScreen.c1 = sharedPreferences.getInt("COLOR_1", 0);
+        NxNLockScreen.c2 = sharedPreferences.getInt("COLOR_2", 1);
+        NxNLockScreen.c3 = sharedPreferences.getInt("COLOR_3", 2);
+        NxNLockScreen.c4 = sharedPreferences.getInt("COLOR_4", 3);
 
-        c1 = sharedPreferences.getInt("COLOR_1", 0);
-        c2 = sharedPreferences.getInt("COLOR_2", 1);
-        c3 = sharedPreferences.getInt("COLOR_3", 2);
-        c4 = sharedPreferences.getInt("COLOR_4", 3);
-
+        // PATTERN ORDER SPINNERS
         seqOrder = (Spinner) findViewById(R.id.sequenceOrder);
         locOrder = (Spinner) findViewById(R.id.locationOrder);
         quantOrder = (Spinner) findViewById(R.id.quantityOrder);
-
 
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
                 R.array.patterns_array, R.layout.custom_spinner);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
+        // Color Sequence Order Spinner
         seqOrder.setAdapter(adapter);
         seqOrder.setSelection(0);
         seqOrder.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 seqNum = Integer.parseInt(adapterView.getItemAtPosition(i).toString());
-                Log.v(TAG, "SELECTED FOR SEQ ORDER " + seqNum);
+                Log.v(TAG, "SEQ ORDER = " + seqNum);
             }
-
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
                 seqNum = 0;
             }
         });
 
-
+        // Location Order Spinner
         locOrder.setAdapter(adapter);
         locOrder.setSelection(1);
         locOrder.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 locNum = Integer.parseInt(adapterView.getItemAtPosition(i).toString());
-                Log.v(TAG, "SELECTED FOR LOC ORDER " + locNum);
+                Log.v(TAG, "LOC ORDER " + locNum);
             }
-
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
                 locNum = 0;
             }
         });
 
+        // Quantity Spinner
         quantOrder.setAdapter(adapter);
         quantOrder.setSelection(2);
         quantOrder.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 quantNum = Integer.parseInt(adapterView.getItemAtPosition(i).toString());
-                Log.v(TAG, "SELECTED FOR QUANT ORDER " + quantNum);
+                Log.v(TAG, "QUANT ORDER " + quantNum);
             }
 
             @Override
@@ -136,214 +227,107 @@ public class SetPassword extends Activity implements View.OnClickListener{
             }
         });
 
+        // Checkboxes to enable a pattern
         seqBox = (CheckBox) findViewById(R.id.sequenceChecked);
         locBox = (CheckBox) findViewById(R.id.locationChecked);
         quantBox = (CheckBox) findViewById(R.id.quantityChecked);
 
+        // Buttons to set a password
         seqSet = (Button) findViewById(R.id.sequenceSetBtn);
         locSet = (Button) findViewById(R.id.locationSetBtn);
         quantSet = (Button) findViewById(R.id.quantitySetBtn);
+
+        // Buttons to verify password & Finish
         finish = (Button) findViewById(R.id.finish);
         verify = (Button) findViewById(R.id.verify);
-
-        tl = (ImageButton)  findViewById(R.id.top_left_set);
-        tm = (ImageButton)  findViewById(R.id.top_mid_set);
-        tr = (ImageButton)  findViewById(R.id.top_right_set);
-        ml = (ImageButton)  findViewById(R.id.mid_left_set);
-        mm = (ImageButton)  findViewById(R.id.mid_mid_set);
-        mr = (ImageButton)  findViewById(R.id.mid_right_set);
-        bl = (ImageButton)  findViewById(R.id.bot_left_set);
-        bm = (ImageButton)  findViewById(R.id.bot_mid_set);
-        br = (ImageButton)  findViewById(R.id.bot_right_set);
-
-        tl.setOnClickListener(this);
-        tm.setOnClickListener(this);
-        tr.setOnClickListener(this);
-        ml.setOnClickListener(this);
-        mm.setOnClickListener(this);
-        mr.setOnClickListener(this);
-        bl.setOnClickListener(this);
-        bm.setOnClickListener(this);
-        br.setOnClickListener(this);
 
         seqSet.setOnClickListener(this);
         locSet.setOnClickListener(this);
         quantSet.setOnClickListener(this);
+
         finish.setOnClickListener(this);
         verify.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View v) {
-        int id = v.getId();
+        switch (v.getId()) {
+            case R.id.sequenceSetBtn:
+                if (seqSet.getText().toString().equalsIgnoreCase("Set")) {
+                    if(passwordMode == -1) {
+                        seqSet.setText("Finish");
+                        passwordMode = 0;
+                        seqPwd = "";
 
-        if(isGridButton(id)) {
-            int locationX = 0, locationY = 0;
-            String color;
-            char c;
-
-            switch(id) {
-                case R.id.top_left_set:
-                    locationX = 0;
-                    locationY = 0;
-                    break;
-                case R.id.top_mid_set:
-                    locationX = 1;
-                    locationY = 0;
-                    break;
-                case R.id.top_right_set:
-                    locationX = 2;
-                    locationY = 0;
-                    break;
-                case R.id.mid_left_set:
-                    locationX = 0;
-                    locationY = 1;
-                    break;
-                case R.id.mid_mid_set:
-                    locationX = 1;
-                    locationY = 1;
-                    break;
-                case R.id.mid_right_set:
-                    locationX = 2;
-                    locationY = 1;
-                    break;
-                case R.id.bot_left_set:
-                    locationX = 0;
-                    locationY = 2;
-                    break;
-                case R.id.bot_mid_set:
-                    locationX = 1;
-                    locationY = 2;
-                    break;
-                case R.id.bot_right_set:
-                    locationX = 2;
-                    locationY = 2;
-                    break;
-            }
-            color = pat.getColorAtPosition(locationX,locationY);
-            Log.v(TAG, " clicked "+ color);
-            c = color.charAt(0);
-
-            switch(passwordMode) {
-                case 0:
-                    seqPwd += "" + c;
-                    pat.updatePattern();
-                    updateColorGrid();
-                    break;
-                case 1:
-                    locPwd += "" + locationX + "" + locationY;
-                    pat.updatePattern();
-                    updateColorGrid();
-                    break;
-                case 2:
-                    if (c == 'R') {
-                        quantPwd[0]++;
-                    } else if (c == 'B') {
-                        quantPwd[1]++;
-                    } else if (c == 'Y') {
-                        quantPwd[2]++;
+                        enterSettingPasswordMode();
                     } else {
-                        quantPwd[3]++;
+                        Toast.makeText(this, "Please finish setting a password before trying to set another one", Toast.LENGTH_SHORT).show();
                     }
-                    pat.updatePattern();
-                    updateColorGrid();
-                    break;
-                case 3:
-                    // verifying the password
-                    boolean unlock = pat.input(locationX, locationY);
-                    if (unlock) {
-                        Toast.makeText(this, "Password confirmed!", Toast.LENGTH_SHORT).show();
-                        finish.setEnabled(true);
-                        verify.setText("Verify");
-                        enableCheckedButtons();
-                        passwordMode = -1;
+                } else if (seqSet.getText().toString().equalsIgnoreCase("Finish")) {
+                    seqSet.setText("Set");
+                    leaveSettingPasswordMode();
+                }
+                break;
+
+            case R.id.locationSetBtn:
+                if (locSet.getText().toString().equalsIgnoreCase("Set")) {
+                    if(passwordMode == -1) {
+                        locSet.setText("Finish");
+                        passwordMode = 1;
+                        locPwd = "";
+
+                        enterSettingPasswordMode();
                     } else {
-                        pat.updatePattern();
-                        updateColorGrid();
+                        Toast.makeText(this, "Please finish setting a password before trying to set another one", Toast.LENGTH_SHORT).show();
                     }
-                    break;
+                } else if (locSet.getText().toString().equalsIgnoreCase("Finish")) {
+                    locSet.setText("Set");
+                    leaveSettingPasswordMode();
+                }
+                break;
 
-                default:
-                    Log.v(TAG, "Grid button pressed but not setting anything");
-                    break;
-            }
-        } else {
-            switch (id) {
-                case R.id.sequenceSetBtn:
-                    if (seqSet.getText().toString().equalsIgnoreCase("Set")) {
-                        if(passwordMode == -1) {
-                            seqSet.setText("Finish");
-                            passwordMode = 0;
-                            seqPwd = "";
+            case R.id.quantitySetBtn:
+                if (quantSet.getText().toString().equalsIgnoreCase("Set")) {
+                    if(passwordMode == -1) {
+                        quantSet.setText("Finish");
+                        passwordMode = 2;
+                        quantPwd[0] = 0;
+                        quantPwd[1] = 0;
+                        quantPwd[2] = 0;
+                        quantPwd[3] = 0;
 
-                            enterSettingPasswordMode();
-                        } else {
-                            Toast.makeText(this, "Please finish setting a password before trying to set another one", Toast.LENGTH_SHORT).show();
-                        }
-                    } else if (seqSet.getText().toString().equalsIgnoreCase("Finish")) {
-                        seqSet.setText("Set");
-                        leaveSettingPasswordMode();
+                        enterSettingPasswordMode();
+                    }else {
+                        Toast.makeText(this, "Please finish setting a password before trying to set another one", Toast.LENGTH_SHORT).show();
                     }
-                    break;
+                } else if (quantSet.getText().toString().equalsIgnoreCase("Finish")) {
+                    quantSet.setText("Set");
+                    leaveSettingPasswordMode();
+                }
+                break;
 
-                case R.id.locationSetBtn:
-                    if (locSet.getText().toString().equalsIgnoreCase("Set")) {
-                        if(passwordMode == -1) {
-                            locSet.setText("Finish");
-                            passwordMode = 1;
-                            locPwd = "";
-
-                            enterSettingPasswordMode();
-                        } else {
-                            Toast.makeText(this, "Please finish setting a password before trying to set another one", Toast.LENGTH_SHORT).show();
-                        }
-                    } else if (locSet.getText().toString().equalsIgnoreCase("Finish")) {
-                        locSet.setText("Set");
-                        leaveSettingPasswordMode();
-                    }
-                    break;
-
-                case R.id.quantitySetBtn:
-                    if (quantSet.getText().toString().equalsIgnoreCase("Set")) {
-                        if(passwordMode == -1) {
-                            quantSet.setText("Finish");
-                            passwordMode = 2;
-                            quantPwd[0] = 0;
-                            quantPwd[1] = 0;
-                            quantPwd[2] = 0;
-                            quantPwd[3] = 0;
-
-                            enterSettingPasswordMode();
-                        }else {
-                            Toast.makeText(this, "Please finish setting a password before trying to set another one", Toast.LENGTH_SHORT).show();
-                        }
-                    } else if (quantSet.getText().toString().equalsIgnoreCase("Finish")) {
-                        quantSet.setText("Set");
-                        leaveSettingPasswordMode();
-                    }
-                    break;
-                case R.id.verify:
-                    if(verify.getText().toString().equalsIgnoreCase("Stop")) {
-                        passwordMode = -1;
-                        enableCheckedButtons();
-                        verify.setText("Verify");
+            case R.id.verify:
+                if(verify.getText().toString().equalsIgnoreCase("Stop")) {
+                    passwordMode = -1;
+                    enableCheckedButtons();
+                    verify.setText("Verify");
+                } else {
+                    if (checkSameNumbers()) {
+                        Toast.makeText(this, "You cannot have two patterns have the same order number!", Toast.LENGTH_SHORT).show();
                     } else {
-                        if (checkSameNumbers()) {
-                            Toast.makeText(this, "You cannot have two patterns have the same order number!", Toast.LENGTH_SHORT).show();
-                        } else {
-                            setUpVerification();
-
-                        }
+                        setUpVerification();
                     }
-                    break;
-                case R.id.finish:
-                    setPasswords();
-                    Settings.needReset = false;
-                    //start lock service
-                    startService(new Intent(getBaseContext(), LockService.class));
-                    this.finish();
-                    break;
-            }
+                }
+                break;
+
+            case R.id.finish:
+                setPasswords();
+                Settings.needReset = false;
+
+                //start lock service
+                startService(new Intent(getBaseContext(), LockService.class));
+                this.finish();
+                break;
         }
     }
 
@@ -353,6 +337,7 @@ public class SetPassword extends Activity implements View.OnClickListener{
      */
     private void enterSettingPasswordMode() {
         disableCheckSpins();
+
         verify.setEnabled(false);
         finish.setEnabled(false);
     }
@@ -371,8 +356,8 @@ public class SetPassword extends Activity implements View.OnClickListener{
      *  Can only enable Verify button if ALL patterns that are checked have a set pattern
      */
     private void checkEnableVerify() {
-        Log.v(TAG, seqChecked + " seq = " + seqPwd + ", " +seqChecked + "loc = "
-                + locPwd +", quant = " + Arrays.toString(quantPwd));
+        Log.v(TAG, seqChecked + " seq = " + seqPwd + ", " + seqChecked + "loc = "
+                + locPwd + ", quant = " + Arrays.toString(quantPwd));
 
         if( (seqPwd.equals("") && seqChecked) || (locPwd.equals("") && locChecked) ||
                 (quantChecked && quantPwd[0]==0&&quantPwd[1]==0&&quantPwd[2]==0&&quantPwd[3]==0)) {
@@ -404,6 +389,7 @@ public class SetPassword extends Activity implements View.OnClickListener{
         locBox.setEnabled(false);
         quantBox.setEnabled(false);
     }
+
     /**
      * Enable Set buttons for only the patterns that are checked and ALL CheckBoxes and Spinners
      */
@@ -452,9 +438,9 @@ public class SetPassword extends Activity implements View.OnClickListener{
         passwordMode = 3;
 
         Log.v(TAG, "entire mode = " + entireMode + ", entirePassword = "+Arrays.toString(entirePassword));
-        pat = new Pattern(entireMode, 3, entirePassword,System.currentTimeMillis());
+        pat = new Pattern(entireMode, n, entirePassword,System.currentTimeMillis());
 
-        updateColorGrid();
+        refreshGrid();
     }
 
     /**
@@ -516,7 +502,6 @@ public class SetPassword extends Activity implements View.OnClickListener{
         }
 
         Log.v(TAG, "PASSWORD MODE = " + entireMode);
-
     }
 
     /**
@@ -536,18 +521,19 @@ public class SetPassword extends Activity implements View.OnClickListener{
             sameNumbers = true;
         }
         return sameNumbers;
-
     }
 
     /**
      * Enters password into SharedPreferences
      */
     private void setPasswords() {
+
         SharedPreferences.Editor editor = sharedPreferences.edit();
 
         editor.putString("patternKey", entireMode);
         editor.putString("passwordKey", entirePassword[0] +"/"+ entirePassword[1] +"/"+ entirePassword[2]);
         editor.commit();
+
     }
 
     public void onCheckboxClicked(View v) {
@@ -581,55 +567,4 @@ public class SetPassword extends Activity implements View.OnClickListener{
 
         finish.setEnabled(false);
     }
-
-    private boolean isGridButton(int id) {
-        boolean bool;
-        switch(id) {
-            case R.id.top_left_set:
-            case R.id.top_mid_set:
-            case R.id.top_right_set:
-            case R.id.mid_left_set:
-            case R.id.mid_mid_set:
-            case R.id.mid_right_set:
-            case R.id.bot_left_set:
-            case R.id.bot_mid_set:
-            case R.id.bot_right_set:
-                bool = true;
-                break;
-            default:
-                bool = false;
-                break;
-        }
-        return bool;
-    }
-
-    private void updateColorGrid() {
-        setBtnColor(tl, pat.getColorAtPosition(0,0));
-        setBtnColor(tm, pat.getColorAtPosition(1,0));
-        setBtnColor(tr, pat.getColorAtPosition(2,0));
-
-        setBtnColor(ml, pat.getColorAtPosition(0,1));
-        setBtnColor(mm, pat.getColorAtPosition(1,1));
-        setBtnColor(mr, pat.getColorAtPosition(2,1));
-
-        setBtnColor(bl, pat.getColorAtPosition(0,2));
-        setBtnColor(bm, pat.getColorAtPosition(1,2));
-        setBtnColor(br, pat.getColorAtPosition(2,2));
-    }
-
-    private void setBtnColor(ImageButton btn, String color ) {
-
-        if(color.equals("RED")) {
-            btn.setBackgroundColor(Color.parseColor(colors[c1]));
-        } else if(color.equals("BLUE")) {
-            btn.setBackgroundColor(Color.parseColor(colors[c2]));
-        } else if(color.equals("GREEN")) {
-            btn.setBackgroundColor(Color.parseColor(colors[c3]));
-        } else if(color.equals("YELLOW")) {
-            btn.setBackgroundColor(Color.parseColor(colors[c4]));
-        } else {
-            btn.setBackgroundColor(getResources().getColor(R.color.White));
-        }
-    }
-
 }

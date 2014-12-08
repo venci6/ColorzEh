@@ -35,35 +35,22 @@ public class ColorSpinnerFragment extends Fragment {
         color_values_array =getResources().getStringArray(R.array.color_values_array);
         categorySpinner = (Spinner) v.findViewById(R.id.colorsSpinner);
 
-        // Create an ArrayAdapter using the string array and a default spinner layout
         adapter = new ArrayAdapter<String>(getActivity(), R.layout.custom_spinner, colors_array);
-
-        /*
-        adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, colors_array) {
-            @Override
-            public View getView(int position, View convertView, ViewGroup parent) {
-                TextView view = (TextView) super.getView(position, convertView, parent);
-                return view;
-            }
-        };
-        */
-        // Specify the layout to use when the list of choices appears
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        // Apply the adapter to the spinner
         categorySpinner.setAdapter(adapter);
 
-        // if Editing something; need to load what was previously selected
+
+
+        // To know which color spinner it is (1-4)
         Bundle bundle = this.getArguments();
         if(bundle!= null) {
             fragNum = bundle.getInt("SPINNER_NUM");
         }
 
         SharedPreferences sharedpreferences = getActivity().getSharedPreferences(LockScreen.MY_PREFERENCES, Context.MODE_PRIVATE);
-        //currSelectedColor = sharedpreferences.getInt("COLOR_"+fragNum, fragNum-1);
-
-
         currSelectedColor = sharedpreferences.getInt("COLOR_"+fragNum, -1);
 
+        // Nothing's been selected; default color
         if(currSelectedColor==-1) {
             currSelectedColor = fragNum-1;
             SharedPreferences.Editor editor = sharedpreferences.edit();
@@ -81,29 +68,22 @@ public class ColorSpinnerFragment extends Fragment {
                 Log.v("CSF", "pos = " + pos);
                 currSelectedColor = pos;
 
-
-                    // when a category is selected, display its color in the spinner
+                // when a category is selected, display its color in the spinner
                 Log.v("ColorSpinnerFragment", colors_array[pos] + "=" + color_values_array[pos]);
 
                 int c = Color.parseColor(color_values_array[pos]);
 
-                ((TextView) parent.getChildAt(0)).setBackgroundColor(c);
-
-                ((TextView) parent.getChildAt(0)).setTextColor(c+ 10000);
+                TextView colorView = (TextView) parent.getChildAt(0);
+                colorView.setBackgroundColor(c);
+                colorView.setTextColor(c+ 10000);
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-                // Another interface callback
                 Log.v("onNothingSelected", "nothing!!!");
                 currSelectedColor = fragNum-1;
-                //categorySelected = "Default";
             }
         });
-
-
-
-
 
         return v;
     }
@@ -112,7 +92,7 @@ public class ColorSpinnerFragment extends Fragment {
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
 
-        //outState.putInt("CATEGORY_POST", posSelected);
+        outState.putInt("COLOR_CHOSEN", currSelectedColor);
     }
 
     public int getColor() {

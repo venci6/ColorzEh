@@ -1,5 +1,7 @@
 package com.bearnecessities.colorzeh;
 
+import android.util.Log;
+
 import java.util.Random;
 
 /**
@@ -121,6 +123,7 @@ public class Pattern {
         this.rand.setSeed(seed);
 
         this.layout = generateLayout();
+        Log.v("pattern layout", this.layout);
     }
 
     /* =========================================================================
@@ -151,7 +154,7 @@ public class Pattern {
      * @return a [R|G|B|Y]
      */
     public String getCAtPosition (int x, int y) {
-        return getColorAtPosition(x, y).substring(0,1);
+        return getColorAtPosition(x, y).substring(0, 1);
     }
 
     /**

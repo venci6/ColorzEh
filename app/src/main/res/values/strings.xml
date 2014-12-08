@@ -23,10 +23,14 @@
     <string name="set">Set</string>
     <string name="verify">Verify</string>
     <string name="finish">Finish</string>
+    <string name="confirm">Confirm</string>
 
     <string name="one">1</string>
     <string name="two">2</string>
     <string name="three">3</string>
+
+    <string name="setNXN">Size of grid</string>
+    <string name="setSize">Set size</string>
 
 
     <string name="setPasswordText">"To set a password, click the checkbox of the pattern and press the \'Set\' button. You can then input your password in the grid at the bottom of the screen. Click \'Finish\' to finish your password. The number on the left indicates the order you want the pattern to be, if you choose multiple patterns to be your password"
@@ -34,7 +38,8 @@
 
     <string name="aboutpage">"We are real cool, guys! We aren't very Canadian eh? But we try cause we love bears."</string>
 
-
+    <string name="donate">Donate Now</string>
+    <string name="close">Close</string>
     <string name="TLBtn">Top Left Button</string>
     <string name="TMBtn">Top Mid Button</string>
     <string name="TRBtn">Top Right Button</string>
