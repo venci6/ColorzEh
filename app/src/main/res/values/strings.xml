@@ -38,7 +38,8 @@
 
     <string name="aboutpage">"We are real cool, guys! We aren't very Canadian eh? But we try cause we love bears."</string>
 
-
+    <string name="donate">Donate Now</string>
+    <string name="close">Close</string>
     <string name="TLBtn">Top Left Button</string>
     <string name="TMBtn">Top Mid Button</string>
     <string name="TRBtn">Top Right Button</string>
